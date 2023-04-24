@@ -1,0 +1,43 @@
+Exercise: id, name, user_id, created, updated
+Workout: id, timestamp, notes, user_id, created, updated
+Workout_Exercise: id, exercise_id, workout_id, created, updated
+Workout_Sets: we_id, setno, reps, weight, created, updated
+
+CREATE TABLE `Exercise` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int,
+  `name` VARCHAR(255),
+  `created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+)
+
+CREATE TABLE `Workout` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int,
+  `timestamp` datetime,
+  `notes` text,
+  `created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+)
+
+CREATE TABLE `WorkoutExercise` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `exercise_id` int,
+  `workout_id` int,
+  `created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+)
+
+CREATE TABLE `WorkoutSets` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `we_id` int,
+  `setno` int,
+  `reps` int,
+  `weight` int,
+  `created` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+)
