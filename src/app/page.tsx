@@ -1,8 +1,13 @@
-import Image from "next/image"
-import { Inter } from "next/font/google"
+"use client"
 
-const inter = Inter({ subsets: ["latin"] })
+import Link from "next/link"
+import { Inter } from "next/font/google"
+import { useState, useEffect } from "react"
 
 export default function Home() {
-  return <main className="">home</main>
+  return (
+    <>
+      <article className="content p-3">My Content</article>
+    </>
+  )
 }

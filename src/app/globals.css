@@ -1,3 +1,101 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --header-height: 60px;
+  --footer-height: 60px;
+
+  --blue-50: #f5f9ff;
+  --blue-100: #d0e1fd;
+  --blue-200: #abc9fb;
+  --blue-300: #85b2f9;
+  --blue-400: #609af8;
+  --blue-500: #3b82f6;
+  --blue-600: #326fd1;
+  --blue-700: #295bac;
+  --blue-800: #204887;
+  --blue-900: #183462;
+}
+
+/* GRID LAYOUT */
+
+#root {
+  display: grid;
+  gap: 0px;
+  grid-template-areas:
+    "header"
+    "content"
+    "footer";
+}
+
+.content {
+  min-height: calc(100vh - (var(--footer-height) + var(--header-height)));
+  grid-area: content;
+}
+
+.footer {
+  grid-area: footer;
+  background-color: var(--blue-200);
+  text-align: center;
+  height: 60px;
+}
+
+.footer a {
+  color: var(--blue-800);
+}
+
+/* END GRID LAYOUT */
+
+/* NAVBAR */
+
+.navbar {
+  grid-area: header;
+  background-color: var(--blue-200);
+}
+
+.title {
+  color: var(--blue-800);
+}
+
+.navbar-links li a:hover {
+  background-color: var(--blue-100);
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+.navbar-links li a {
+  text-decoration: none;
+  display: block;
+  color: var(--blue-800);
+  padding: 1rem;
+}
+
+.toggle-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 23px;
+  width: 23px;
+}
+
+.toggle-button .bar {
+  height: 3px;
+  width: 100%;
+  background-color: var(--blue-900);
+  border-radius: 10px;
+}
+
+/* END NAVBAR */
+
+.span_link {
+  color: blue;
+  text-decoration: underline;
+}
+
+.span_link:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
