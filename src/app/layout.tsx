@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body id="root">
         <Navbar />
-        {children}
+        <article className="content p-3">{children}</article>
         <footer className="footer py-3">
           <Link href="/">Wholesoft Strength</Link>
         </footer>
