@@ -99,3 +99,9 @@
   cursor: pointer;
   text-decoration: none;
 }
+
+/* HERO ICONS */
+.hero-icon {
+  width: 20px;
+  height: 20px;
+}

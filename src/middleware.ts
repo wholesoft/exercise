@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 const allowedOrigins =
   process.env.NODE_ENV === "production"
     ? ["https://strength.wholesoft.net"]
-    : ["https://localhost:3000", "http://127.0.0.1"]
+    : ["http://localhost:3000", "http://127.0.0.1:3000"]
 
 export function middleware(request: Request) {
   const origin = request.headers.get("origin")

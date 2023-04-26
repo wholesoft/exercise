@@ -7,37 +7,64 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {  
+  id Int @id @default(autoincrement())
+  email  String? @unique @db.VarChar(255)
+  created           DateTime? @default(now()) @db.DateTime(0)
+  updated           DateTime? @updatedAt @default(now()) @db.DateTime(0)  
+  role              Role      @default(BASIC)
+  exercises Exercise[]
+  workouts  Workout[]
+
+  @@index([email])
+}
+
 model Exercise {
-  id      Int       @id @default(autoincrement())
-  user_id Int?
-  name    String?   @db.VarChar(255)
-  created DateTime? @default(now()) @db.DateTime(0)
-  updated DateTime? @default(now()) @db.DateTime(0)
+  id                Int       @id @default(autoincrement())
+  user_id           Int
+  name              String?   @unique @db.VarChar(255)
+  created           DateTime? @default(now()) @db.DateTime(0)
+  updated           DateTime? @updatedAt @default(now()) @db.DateTime(0)
+  user              User @relation(fields: [user_id], references: [id])
+  workout_exercise  WorkoutExercise[]
+
+  @@index([name])
 }
 
 model Workout {
-  id        Int       @id @default(autoincrement())
-  user_id   Int?
-  timestamp DateTime? @db.DateTime(0)
-  notes     String?   @db.Text
-  created   DateTime? @default(now()) @db.DateTime(0)
-  updated   DateTime? @default(now()) @db.DateTime(0)
+  id                Int       @id @default(autoincrement())
+  user_id           Int
+  timestamp         DateTime? @db.DateTime(0)
+  notes             String?   @db.Text
+  created           DateTime? @default(now()) @db.DateTime(0)
+  updated           DateTime? @updatedAt @default(now()) @db.DateTime(0)
+  user              User @relation(fields: [user_id], references: [id])
+  workout_exercise  WorkoutExercise[]
 }
 
 model WorkoutExercise {
   id          Int       @id @default(autoincrement())
-  exercise_id Int?
-  workout_id  Int?
+  exercise_id Int
+  workout_id  Int 
   created     DateTime? @default(now()) @db.DateTime(0)
-  updated     DateTime? @default(now()) @db.DateTime(0)
+  updated     DateTime? @updatedAt @default(now()) @db.DateTime(0)
+  exercise    Exercise @relation(fields: [exercise_id], references: [id])
+  workout     Workout @relation(fields: [workout_id], references: [id])
+  workout_set WorkoutSets[]
 }
 
 model WorkoutSets {
   id      Int       @id @default(autoincrement())
-  we_id   Int?
+  we_id   Int
   setno   Int?
   reps    Int?
   weight  Int?
   created DateTime? @default(now()) @db.DateTime(0)
-  updated DateTime? @default(now()) @db.DateTime(0)
+  updated DateTime? @updatedAt @default(now()) @db.DateTime(0)
+  workout_exericse WorkoutExercise @relation(fields: [we_id], references: [id])
+}
+
+enum Role {
+  BASIC
+  ADMIN
 }
