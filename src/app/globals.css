@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+a {
+  @apply text-blue-600 hover:underline;
+}
+
+.input_style_001 {
+  @apply shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight;
+}
+
+.btn {
+  @apply font-bold py-2 px-4 rounded;
+}
+.btn-blue {
+  @apply bg-blue-500 text-white;
+}
+.btn-blue:hover {
+  @apply bg-blue-700;
+}
+
 :root {
   --header-height: 60px;
   --footer-height: 60px;

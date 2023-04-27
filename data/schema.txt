@@ -10,7 +10,7 @@ CREATE TABLE `Exercise` (
   `created` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-)
+);
 
 CREATE TABLE `Workout` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -20,7 +20,7 @@ CREATE TABLE `Workout` (
   `created` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-)
+);
 
 CREATE TABLE `WorkoutExercise` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -29,7 +29,7 @@ CREATE TABLE `WorkoutExercise` (
   `created` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-)
+);
 
 CREATE TABLE `WorkoutSets` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -40,4 +40,4 @@ CREATE TABLE `WorkoutSets` (
   `created` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-)
+);

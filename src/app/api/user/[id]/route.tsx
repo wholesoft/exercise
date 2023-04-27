@@ -1,0 +1,21 @@
+import { NextResponse } from "next/server"
+import { PrismaClient } from "@prisma/client"
+
+type Props = {
+  params: {
+    id: string
+  }
+}
+
+const prisma = new PrismaClient()
+
+export async function GET(request: Request, { params: { id } }: Props) {
+  const parsedId = parseInt(id.toString())
+  if (isNaN(parsedId)) return NextResponse.json({ message: "Invalid ID" })
+
+  const user = await prisma.user.findUnique({ where: { id: parsedId } })
+
+  return user
+    ? NextResponse.json(user)
+    : NextResponse.json({ message: `No user with id ${id}` })
+}
