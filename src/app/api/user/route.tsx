@@ -23,12 +23,31 @@ export async function DELETE(request: Request) {
 
   console.log(`DELETE USER ${id}`)
   if (!id) return NextResponse.json({ message: "id required" })
-  /*   const response = await prisma.user.delete({
-    id: id,
-  }) */
+
   const response = await prisma.user.delete({
     where: { id: id },
   })
 
   return NextResponse.json({ message: `User ${id} deleted` })
+}
+
+export async function PUT(request: Request) {
+  const { id, email, role }: User = await request.json()
+
+  console.log(request.json())
+
+  /*   if (!id || !email || !role)
+    return NextResponse.json({ message: "Missing required data." }) */
+
+  const updatedUser = await prisma.user.update({
+    data: {
+      email: email,
+      role: role,
+    },
+    where: {
+      id: id,
+    },
+  })
+
+  return NextResponse.json(updatedUser)
 }

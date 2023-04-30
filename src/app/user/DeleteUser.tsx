@@ -25,7 +25,7 @@ export default function DeleteUser(props: any) {
   }
 
   return (
-    <span onClick={deleteUser}>
+    <span onClick={deleteUser} className="hover:cursor-pointer">
       <TrashIcon size="20" />
     </span>
   )

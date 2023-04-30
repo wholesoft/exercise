@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import UpdateExercise from "../UpdateExercise"
 
 type Props = {
   params: {
@@ -29,6 +30,7 @@ export default async function ExercisePage({ params: { id } }: Props) {
         <p>{data.user_id}</p>
         <p>{data.created}</p>
       </div>
+      <UpdateExercise exercise={data} />
     </>
   )
 }

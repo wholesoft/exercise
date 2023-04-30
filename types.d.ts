@@ -5,10 +5,11 @@ type Todo = {
   completed: boolean
 }
 
-type Exercise = {
+/* type Exercise = {
   id: number
   user_id: number
   name: string
   created: Date
   updated: Date
 }
+ */

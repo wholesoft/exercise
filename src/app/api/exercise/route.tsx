@@ -22,9 +22,32 @@ export async function POST(request: Request) {
 export async function DELETE(request: Request) {
   const { id }: Partial<Exercise> = await request.json()
 
+  console.log(`DELETE Exercise ${id}`)
   if (!id) return NextResponse.json({ message: "id required" })
+
   const response = await prisma.exercise.delete({
-    id: id,
+    where: { id: id },
   })
+
   return NextResponse.json({ message: `Exercise ${id} deleted` })
+}
+
+export async function PUT(request: Request) {
+  const { id, name }: Exercise = await request.json()
+
+  console.log(request.json())
+
+  /*   if (!id || !email || !role)
+    return NextResponse.json({ message: "Missing required data." }) */
+
+  const updatedRecord = await prisma.exercise.update({
+    data: {
+      name: name,
+    },
+    where: {
+      id: id,
+    },
+  })
+
+  return NextResponse.json(updatedRecord)
 }

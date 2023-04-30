@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "next/link"
-import CreateExercise2 from "./CreateExercise2"
-import TrashIcon from "../../icons/Icons"
+import CreateExercise from "./CreateExercise"
+import DeleteExercise from "./DeleteExercise"
 
 type Props = {}
 
@@ -26,7 +26,7 @@ export default async function ExercisePage({}: Props) {
           return <Exercise key={exercise.id} exercise={exercise} />
         })}
       </div>
-      <CreateExercise2 />
+      <CreateExercise />
     </>
   )
 }
@@ -34,12 +34,12 @@ export default async function ExercisePage({}: Props) {
 function Exercise({ exercise }: any) {
   const { id, name, created } = exercise || {}
   return (
-    <Link href={`/exercise/${id}`}>
-      <div className="flex">
+    <div className="flex">
+      <Link href={`/exercise/${id}`}>
         <span>{name}</span>
+      </Link>
 
-        <TrashIcon size="20" />
-      </div>
-    </Link>
+      <DeleteExercise exercise={exercise} />
+    </div>
   )
 }
