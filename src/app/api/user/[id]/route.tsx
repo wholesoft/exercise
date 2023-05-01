@@ -13,7 +13,13 @@ export async function GET(request: Request, { params: { id } }: Props) {
   const parsedId = parseInt(id.toString())
   if (isNaN(parsedId)) return NextResponse.json({ message: "Invalid ID" })
 
-  const user = await prisma.user.findUnique({ where: { id: parsedId } })
+  const user = await prisma.user.findUnique({
+    include: {
+      workouts: {},
+      exercises: {},
+    },
+    where: { id: parsedId },
+  })
 
   return user
     ? NextResponse.json(user)

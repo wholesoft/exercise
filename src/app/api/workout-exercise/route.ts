@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   const { exercise_id, workout_id }: Partial<WorkoutExercise> =
     await request.json()
 
-  if (!exercise_id || workout_id)
+  if (!exercise_id || !workout_id)
     return NextResponse.json({ message: "Missing required data." })
   const data = { exercise_id, workout_id }
 

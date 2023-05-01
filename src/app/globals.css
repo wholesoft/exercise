@@ -10,6 +10,10 @@ a {
   @apply shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight;
 }
 
+.select_style_001 {
+  @apply border py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400;
+}
+
 .btn {
   @apply font-bold py-2 px-4 rounded;
 }
