@@ -2,10 +2,12 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { useAuth } from "../hooks/useAuth"
 
 type Props = {}
 
 export default function Navbar({}: Props) {
+  const { auth, setAuth } = useAuth()
   const [activeNav, setActiveNav] = useState("hidden")
   const handleToggleButtonClick = () => {
     console.log(activeNav)
@@ -54,6 +56,7 @@ export default function Navbar({}: Props) {
           </ul>
         </div>
       </div>
+      <div>{auth.email}</div>
     </div>
   )
 }
