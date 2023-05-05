@@ -1,22 +1,35 @@
 "use client"
 
-import { useState, FormEvent, ChangeEvent } from "react"
+import { useState, useEffect, FormEvent, ChangeEvent } from "react"
+import { useAuth } from "../../hooks/useAuth"
 
 type Props = {}
 
 const initState = {
   email: "",
   password: "",
+  app: "strength.wholesoft.net",
 }
 
 export default function LoginPage({}: Props) {
   const [input, setInput] = useState(initState)
+  const { setAuth, persist, setPersist } = useAuth()
   const [response, setResponse] = useState("")
+
+  const JWT_PUBLIC_KEY: string = process.env.JWT_PUBLIC_KEY as string
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setInput((prev) => ({ ...prev, [name]: value }))
   }
+
+  const togglePersist = () => {
+    setPersist((prev) => !prev)
+  }
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist)
+  }, [persist])
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -26,8 +39,9 @@ export default function LoginPage({}: Props) {
     // {email: "", password: ""}
     //  'Access-Control-Allow-Origin' header is present on the requested resource. I
 
-    const res = await fetch("http://localhost:3456/auth", {
+    const res = await fetch("http://localhost:3456/login", {
       method: "POST",
+      credentials: "include", //--> send/receive cookies
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
@@ -37,8 +51,13 @@ export default function LoginPage({}: Props) {
     })
     console.log(res)
     const result = await res.json()
-    console.log(result)
-    setResponse(JSON.stringify(result))
+    if (result.success == true) {
+      const { access_token, roles, email_confirmed, user_id, email } = result
+      setResponse(`${email} (${user_id})`)
+      localStorage.setItem("atoken", access_token)
+    } else {
+      setResponse(result.message)
+    }
 
     // Navigate to thank you
     //router.push(`/thank-you/`)
@@ -47,6 +66,7 @@ export default function LoginPage({}: Props) {
 
   return (
     <>
+      <pre>{JWT_PUBLIC_KEY}</pre>
       <p>{JSON.stringify(input)}</p>
       <p>{response}</p>
       <form
@@ -69,6 +89,15 @@ export default function LoginPage({}: Props) {
           value={input.password}
           onChange={handleChange}
         />
+        <div>
+          <input
+            id="persist"
+            type="checkbox"
+            onChange={togglePersist}
+            checked={persist}
+          />
+          <label htmlFor="persist">&nbsp;Trust this device</label>
+        </div>
         <button className="btn btn-blue">Submit</button>
       </form>
     </>
