@@ -13,6 +13,7 @@ model User {
   created           DateTime? @default(now()) @db.DateTime(0)
   updated           DateTime? @updatedAt @default(now()) @db.DateTime(0)  
   role              Role      @default(BASIC)
+  timezone          Int?
   exercises Exercise[]
   workouts  Workout[]
 
@@ -37,6 +38,7 @@ model Workout {
   timestamp         DateTime? @db.DateTime(0)
   notes             String?   @db.Text
   created           DateTime? @default(now()) @db.DateTime(0)
+  scheduled         Boolean?
   updated           DateTime? @updatedAt @default(now()) @db.DateTime(0)
   user              User @relation(fields: [user_id], references: [id])
   workout_exercise  WorkoutExercise[]

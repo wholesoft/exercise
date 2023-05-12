@@ -3,16 +3,18 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from "react"
 import { useRouter } from "next/navigation"
 
+type Props = {
+  workoutId: number
+}
+
 const initState = {
-  workout_id: 0,
   exercise_id: 0,
 }
 
-export default function CreateWorkoutExercise() {
+export default function CreateWorkoutExercise({ workoutId }: Props) {
   const [data, setData] = useState(initState)
   const router = useRouter()
   const userId = 1
-  const [workouts, setWorkouts] = useState([])
   const [exercises, setExercises] = useState([])
   const [dataLodaded, setDataLodaded] = useState(false)
 
@@ -24,7 +26,6 @@ export default function CreateWorkoutExercise() {
     })
     const data = await res.json()
     console.log(data.workouts)
-    setWorkouts(data.workouts)
     setExercises(data.exercises)
     setDataLodaded(true)
     return { success: true, data: data.workouts }
@@ -39,7 +40,7 @@ export default function CreateWorkoutExercise() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(JSON.stringify(data))
-    let { workout_id, exercise_id } = data
+    let { exercise_id } = data
 
     // Send data to API route
     const res = await fetch("http://localhost:3000/api/workout-exercise", {
@@ -47,7 +48,7 @@ export default function CreateWorkoutExercise() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ exercise_id, workout_id: workoutId }),
     })
     console.log(res)
     //const result = await res.json()
@@ -57,7 +58,6 @@ export default function CreateWorkoutExercise() {
     //router.push(`/thank-you/`)
     setData((prevData) => ({
       ...prevData,
-      workout_id: 0,
       exercise_id: 0,
     }))
     router.refresh()
@@ -74,37 +74,13 @@ export default function CreateWorkoutExercise() {
     }))
   }
 
-  const canSave = [...Object.values(data)].every(Boolean)
-
   const content = dataLodaded ? (
     <form
       onSubmit={handleSubmit}
       className="flex flex-col mx-auto max-w-3xl p-6"
     >
-      <h3 className="text-2xl mb-4">Add Workout Exercise</h3>
-
       <select
-        className="select_style_001"
-        name="workout_id"
-        onChange={handleChange}
-      >
-        <option value="0">Choose Workout</option>
-        {workouts.map((workout: any) => {
-          return (
-            <option key={workout.id} value={workout.id}>
-              {new Date(workout.timestamp).toLocaleString([], {
-                year: "numeric",
-                month: "numeric",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </option>
-          )
-        })}
-      </select>
-      <select
-        className="select_style_001 mt-3"
+        className="select_style_001 mt-2"
         name="exercise_id"
         onChange={handleChange}
       >
@@ -117,9 +93,7 @@ export default function CreateWorkoutExercise() {
           )
         })}
       </select>
-      <button className="btn btn-blue mt-3" disabled={!canSave}>
-        Submit
-      </button>
+      <button className="btn btn-primary ms-2 pt-0 pb-0">Add</button>
     </form>
   ) : (
     <p>Loading...</p>

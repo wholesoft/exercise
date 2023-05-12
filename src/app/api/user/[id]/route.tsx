@@ -15,7 +15,15 @@ export async function GET(request: Request, { params: { id } }: Props) {
 
   const user = await prisma.user.findUnique({
     include: {
-      workouts: {},
+      workouts: {
+        include: {
+          workout_exercise: {
+            include: {
+              workout_set: {},
+            },
+          },
+        },
+      },
       exercises: {},
     },
     where: { id: parsedId },

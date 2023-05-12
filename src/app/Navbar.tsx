@@ -1,62 +1,39 @@
-"use client"
-
-import { useState } from "react"
-import Link from "next/link"
-import { useAuth } from "../hooks/useAuth"
+import React from "react"
 
 type Props = {}
 
 export default function Navbar({}: Props) {
-  const { auth, setAuth } = useAuth()
-  const [activeNav, setActiveNav] = useState("hidden")
-  const handleToggleButtonClick = () => {
-    console.log(activeNav)
-    if (activeNav == "flex") {
-      setActiveNav("hidden")
-    } else {
-      setActiveNav("flex")
-    }
-  }
-
   return (
-    <div className="navbar flex flex-col items-start md:flex-row md:items-center pt-1 pb-1 ">
-      <div className="flex items-center pl-2 pr-6">
-        <Link href="/">
-          <img className="h-11" src="/wholesoft.svg" />
-        </Link>
-
-        <Link href="/">
-          <h1 className="title text-xl ml-2">Wholesoft Strength</h1>
-        </Link>
-      </div>
-      <a
-        href="#"
-        className="toggle-button flex md:hidden"
-        onClick={handleToggleButtonClick}
-      >
-        <span className="bar"></span>
-        <span className="bar"></span>
-        <span className="bar"></span>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <a className="navbar-brand" href="#">
+        Wholesoft Strength
       </a>
-      <div className={`${activeNav} text-center w-full md:w-auto`}>
-        <div className="navbar-links flex flex-col w-full md:w-autos">
-          <ul className="flex flex-col md:flex-row">
-            <li>
-              <a href="/mynotes">My Notes</a>
-            </li>
-            <li>
-              <a href="/account">My Account</a>
-            </li>
-            <li>
-              <a href="/logout">Logout</a>
-            </li>
-            <li>
-              <a href="/admin">Admin</a>
-            </li>
-          </ul>
-        </div>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+
+      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item active">
+            <a className="nav-link" href="#">
+              Home <span className="sr-only">(current)</span>
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="#">
+              Link
+            </a>
+          </li>
+        </ul>
       </div>
-      <div>{auth.email}</div>
-    </div>
+    </nav>
   )
 }

@@ -2,21 +2,28 @@
 
 import { useState, FormEvent, ChangeEvent } from "react"
 import { useRouter } from "next/navigation"
+import { Form } from "react-bootstrap"
+
+let initDate = new Date()
+const offset = initDate.getTimezoneOffset()
+let initLocalDate = new Date(initDate.getTime() - offset * 60 * 1000)
 
 const initState = {
   notes: "",
   user_id: 1,
-  timestamp: new Date(),
+  timestamp: initLocalDate,
+  scheduled: false,
 }
 
 export default function CreateWorkout() {
   const [data, setData] = useState(initState)
   const router = useRouter()
+  const [step, setStep] = useState(1)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(JSON.stringify(data))
-    const { user_id, timestamp, notes } = data
+    const { user_id, timestamp, notes, scheduled } = data
 
     // Send data to API route
     const res = await fetch("http://localhost:3000/api/workout", {
@@ -32,11 +39,8 @@ export default function CreateWorkout() {
 
     // Navigate to thank you
     //router.push(`/thank-you/`)
-    setData((prevData) => ({
-      ...prevData,
-      notes: "",
-      timestamp: new Date(),
-    }))
+    setData(initState)
+    setStep(1)
     router.refresh()
   }
 
@@ -51,34 +55,85 @@ export default function CreateWorkout() {
     }))
   }
 
+  const scheduleWorkout = () => {
+    setData((prevData) => ({
+      ...prevData,
+      scheduled: true,
+    }))
+
+    setStep(3)
+  }
+
+  const handleDateChange = (value) => {
+    setData((prevData) => ({
+      ...prevData,
+      timestamp: new Date(value),
+    }))
+
+    setStep(3)
+  }
+
   const canSave = [...Object.values(data)].every(Boolean)
 
-  const content = (
-    //  id, user_id, timestamp, notes, created, updated
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col mx-auto max-w-3xl p-6"
-    >
-      <h1 className="text-4xl mb-4">Add Workout</h1>
+  let content = <></>
 
-      <label className="text-2xl mb-1" htmlFor="name">
-        Notes:
-      </label>
-      <textarea
-        className="input_style_001"
-        id="notes"
-        name="notes"
-        placeholder="notes"
-        value={data.notes}
-        onChange={handleChange}
-        autoFocus
-      />
+  if (step === 1) {
+    content = (
+      <div>
+        <button className="btn btn-primary" onClick={() => setStep(2)}>
+          Add Workout
+        </button>
+      </div>
+    )
+  }
 
-      <button className="btn btn-blue mt-2" disabled={!canSave}>
-        Submit
-      </button>
-    </form>
-  )
+  if (step === 2) {
+    content = (
+      <div>
+        <button className="btn btn-primary" onClick={() => setStep(3)}>
+          Add Completed Workout
+        </button>
+        <button className="btn btn-primary ms-3" onClick={scheduleWorkout}>
+          Schedule Workout
+        </button>
+      </div>
+    )
+  }
+
+  if (step === 3) {
+    content = (
+      <div>
+        <p style={{ display: "none" }}>{JSON.stringify(data)}</p>
+        <form onSubmit={handleSubmit}>
+          <h4>Create Workout</h4>
+          <Form.Group controlId="wodate">
+            <Form.Label>Select Date</Form.Label>
+            <Form.Control
+              style={{ width: "150px" }}
+              type="date"
+              name="timestamp"
+              placeholder="Workout Date"
+              value={data.timestamp.toISOString().slice(0, 10)}
+              onChange={(e) => handleDateChange(e.target.value)}
+            />
+          </Form.Group>
+          <div className="form-group mt-2">
+            <Form.Label style={{ display: "block" }}>Notes</Form.Label>
+            <textarea
+              className="form_control"
+              id="notes"
+              name="notes"
+              value={data.notes}
+              onChange={handleChange}
+              rows={3}
+              cols={60}
+            />
+          </div>
+          <button className="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    )
+  }
 
   return content
 }

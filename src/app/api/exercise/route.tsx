@@ -4,7 +4,9 @@ import { Exercise, PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 export async function GET(request: Request) {
-  const exercises = await prisma.exercise.findMany()
+  const exercises = await prisma.exercise.findMany({
+    where: { user_id: 1 },
+  })
   return new NextResponse(JSON.stringify(exercises))
 }
 

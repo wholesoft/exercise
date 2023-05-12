@@ -3,6 +3,8 @@ import Link from "next/link"
 import { Inter } from "next/font/google"
 import Navbar from "./Navbar"
 import { AuthProvider } from "../context/AuthProvider"
+import Head from "next/head"
+
 export const metadata = {
   title: "Wholesoft Strength",
   description:
@@ -24,6 +26,7 @@ export default function RootLayout({
       <body id="root">
         <AuthProvider>
           <Navbar />
+          <h1>Working?</h1>
           <article className="content p-3">{children}</article>
           <footer className="footer py-3">
             <Link href="/">Wholesoft Strength</Link>

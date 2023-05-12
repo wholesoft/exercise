@@ -1,20 +1,54 @@
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server"
+import { NextApiRequest, NextApiResponse } from "next"
 import { PrismaClient, User, Workout } from "@prisma/client"
+import { useRouter } from "next/router"
 
 const prisma = new PrismaClient()
 
-export async function GET(request: Request) {
-  const results = await prisma.workout.findMany()
-  return new NextResponse(JSON.stringify(results))
+function getQueryStringParams(url: string) {
+  let result = {}
+  if (url.indexOf("?") > 0) {
+    let paramString = url.slice(url.indexOf("?") + 1)
+    let paramArray = paramString.split("&")
+    for (let item of paramArray) {
+      let keyvalue = item.split("=")
+      result[keyvalue[0]] = keyvalue[1]
+    }
+  }
+  return result
+}
+
+export async function GET(request: NextRequest) {
+  let result = ""
+  const { url } = request
+  const params = getQueryStringParams(url)
+  const { scheduled } = params
+  if (scheduled === "Y") {
+    result = await prisma.workout.findMany({
+      include: {
+        workout_exercise: {
+          include: {
+            workout_set: {},
+          },
+        },
+      },
+      where: { scheduled: true, user_id: 1 },
+    })
+  } else {
+    result = await prisma.workout.findMany()
+  }
+
+  return new NextResponse(JSON.stringify(result))
 }
 
 export async function POST(request: Request) {
-  const { user_id, timestamp, notes }: Partial<Workout> = await request.json()
+  const { user_id, timestamp, notes, scheduled }: Partial<Workout> =
+    await request.json()
 
   console.log("Add Workout")
-  if (!user_id || !timestamp || !notes)
+  if (!user_id || !timestamp || !notes || scheduled === null)
     return NextResponse.json({ message: "Missing required data." })
-  const data = { user_id, timestamp, notes }
+  const data = { user_id, timestamp, notes, scheduled }
 
   const newRecord = await prisma.workout.create({ data })
   return NextResponse.json(newRecord)
@@ -34,17 +68,18 @@ export async function DELETE(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const { id, timestamp, notes }: Workout = await request.json()
+  const { id, timestamp, notes, scheduled }: Workout = await request.json()
 
   console.log(request.json())
 
-  if (!id || !timestamp || !notes)
+  if (!id || !timestamp || !notes || scheduled === null)
     return NextResponse.json({ message: "Missing required data." })
 
   const updatedRecord = await prisma.workout.update({
     data: {
       timestamp: timestamp,
       notes: notes,
+      scheduled: scheduled,
     },
     where: {
       id: id,
