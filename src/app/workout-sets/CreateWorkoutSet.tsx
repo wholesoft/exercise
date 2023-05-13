@@ -3,21 +3,20 @@
 import { useState, FormEvent, ChangeEvent } from "react"
 import { useRouter } from "next/navigation"
 
-const initState = {
-  setno: 0,
-  weight: 0,
-  reps: 0,
-  we_id: 2,
+type Props = {
+  weId: number
+  setNo: number
+  setStep: any
 }
 
-export default function CreateWorkoutSet() {
-  const [data, setData] = useState(initState)
+export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
+  const [data, setData] = useState({ weId, setNo, weight: 0, reps: 0 })
   const router = useRouter()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(JSON.stringify(data))
-    const { we_id, setno, reps, weight } = data
+    const { weId, setNo, reps, weight } = data
 
     // Send data to API route
     const res = await fetch("http://localhost:3000/api/workout-sets", {
@@ -25,17 +24,15 @@ export default function CreateWorkoutSet() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ we_id: weId, setno: setNo, reps, weight }),
     })
     console.log(res)
 
     setData((prevData) => ({
       ...prevData,
-      reps: 0,
-      weight: 0,
-      setno: 0,
-      we_id: 2,
+      setNo: prevData.setNo + 1,
     }))
+    setStep(1)
     router.refresh()
   }
 
@@ -53,49 +50,62 @@ export default function CreateWorkoutSet() {
   const canSave = [...Object.values(data)].every(Boolean)
 
   const content = (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col mx-auto max-w-3xl p-6"
-    >
-      <p>{JSON.stringify(data)}</p>
-      <h3 className="text-2xl mb-4">Add Set</h3>
+    <form onSubmit={handleSubmit}>
+      {/* <div className="container"> */}
+      <div className="row">
+        <div className="col">
+          <label htmlFor="setNo" className="form-label">
+            Set #
+          </label>
 
-      <input
-        className="input_style_001"
-        type="text"
-        id="setno"
-        name="setno"
-        placeholder="Set #"
-        value={data.setno}
-        onChange={handleChange}
-        autoFocus
-      />
+          <input
+            className="form-control"
+            type="text"
+            id="setNo"
+            name="setNo"
+            placeholder="Set"
+            value={data.setNo}
+            onChange={handleChange}
+            autoFocus
+          />
+        </div>
+        <div className="col">
+          <label htmlFor="weight" className="form-label">
+            Weight
+          </label>
 
-      <input
-        className="input_style_001 mt-4"
-        type="text"
-        id="weight"
-        name="weight"
-        placeholder="Weight"
-        value={data.weight}
-        onChange={handleChange}
-        autoFocus
-      />
+          <input
+            className="form-control"
+            type="text"
+            id="weight"
+            name="weight"
+            placeholder="Weight"
+            value={data.weight}
+            onChange={handleChange}
+            autoFocus
+          />
+        </div>
+        <div className="col">
+          <label htmlFor="reps" className="form-label">
+            Reps
+          </label>
 
-      <input
-        className="input_style_001 mt-4"
-        type="text"
-        id="reps"
-        name="reps"
-        placeholder="Reps"
-        value={data.reps}
-        onChange={handleChange}
-        autoFocus
-      />
-
-      <button className="btn btn-blue mt-4" disabled={!canSave}>
-        Submit
-      </button>
+          <input
+            className="form-control"
+            type="text"
+            id="reps"
+            name="reps"
+            placeholder="Reps"
+            value={data.reps}
+            onChange={handleChange}
+            autoFocus
+          />
+        </div>
+        <div className="col d-flex align-items-end">
+          <button className="btn btn-primary">Add Set</button>
+        </div>
+      </div>
+      {/* </div> */}
     </form>
   )
 

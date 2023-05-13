@@ -1,6 +1,8 @@
 import React from "react"
 import AddWorkoutExercise from "./AddWorkoutExercise"
-import { Exercise, User, WorkoutExercise } from "@prisma/client"
+import AddSet from "./AddSet"
+
+import { Exercise, User, WorkoutExercise, WorkoutSets } from "@prisma/client"
 type Props = {
   user: User
 }
@@ -48,6 +50,28 @@ export default async function NextWorkout({ user }: Props) {
                     exercises.filter((e: Exercise) => e.id == we.exercise_id)[0]
                       .name
                   }
+                  <div className="row">
+                    <span className="col">Set #</span>
+                    <span className="col">Weight</span>
+                    <span className="col">Reps</span>
+                  </div>
+                  {we.workout_set.map((set: WorkoutSets) => {
+                    return (
+                      <>
+                        <div className="row">
+                          <span className="col">{set.setno}</span>
+                          <span className="col">{set.weight}lbs</span>
+                          <span className="col">{set.reps}</span>
+                        </div>
+                      </>
+                    )
+                  })}
+
+                  <AddSet
+                    key={we.id}
+                    weId={we.id}
+                    setNo={we.workout_set.length + 1}
+                  />
                   <br />
                 </>
               )
