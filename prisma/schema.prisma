@@ -56,11 +56,12 @@ model WorkoutExercise {
 }
 
 model WorkoutSets {
-  id      Int       @id @default(autoincrement())
-  we_id   Int
-  setno   Int?
-  reps    Int?
-  weight  Int?
+  id            Int       @id @default(autoincrement())
+  we_id         Int
+  setno         Int?
+  reps          Int?
+  weight        Float?
+  weight_units  String?   @db.VarChar(20)
   created DateTime? @default(now()) @db.DateTime(0)
   updated DateTime? @updatedAt @default(now()) @db.DateTime(0)
   workout_exericse WorkoutExercise @relation(fields: [we_id], references: [id])

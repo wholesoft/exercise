@@ -11,23 +11,21 @@ type Props = {
 export default function AddSet({ weId, setNo }: Props) {
   const [step, setStep] = useState(1)
   return step === 1 ? (
-    <div>
-      <button
-        onClick={() => setStep(2)}
-        className="btn btn-primary pl-1 pr-1 pt-0 pb-0"
-      >
-        Add Set
-      </button>
-    </div>
+    <button
+      onClick={() => setStep(2)}
+      className="btn btn-primary pl-1 pr-1 pt-0 pb-0"
+    >
+      Add Set
+    </button>
   ) : (
     <>
       <CreateWorkoutSet weId={weId} setNo={setNo} setStep={setStep} />
-      <button
+      {/*       <button
         onClick={() => setStep(1)}
         className="btn btn-secondary pl-1 pr-1 pt-0 pb-0"
       >
         Cancel
-      </button>
+      </button> */}
     </>
   )
 }

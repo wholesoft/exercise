@@ -9,8 +9,6 @@ async function getUser(id: number) {
     cache: "no-store",
   })
 
-  console.log(res)
-
   const data = await res.json()
   //console.log("fetch results")
   //console.log(data)

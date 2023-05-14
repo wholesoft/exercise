@@ -1,30 +1,14 @@
 import React from "react"
 import AddWorkoutExercise from "./AddWorkoutExercise"
 import AddSet from "./AddSet"
+import EditSetNo from "./editfield/EditSetNo"
+import EditReps from "./editfield/EditReps"
+import EditWeight from "./editfield/EditWeight"
+import EditScheduled from "./editfield/EditScheduled"
 
 import { Exercise, User, WorkoutExercise, WorkoutSets } from "@prisma/client"
 type Props = {
   user: User
-}
-
-async function getWorkouts() {
-  const url = "http://localhost:3000/api/workout?scheduled=Y"
-  const res = await fetch(url, {
-    cache: "no-store",
-  })
-  const data = await res.json()
-
-  return data
-}
-
-async function getExercises() {
-  const url = "http://localhost:3000/api/workout?scheduled=Y"
-  const res = await fetch(url, {
-    cache: "no-store",
-  })
-  const data = await res.json()
-
-  return data
 }
 
 export default async function NextWorkout({ user }: Props) {
@@ -42,7 +26,17 @@ export default async function NextWorkout({ user }: Props) {
 
         return (
           <div>
-            <p>{workoutDate.toString().slice(0, 15)}</p>
+            <p>
+              <span>{workoutDate.toString().slice(0, 15)} </span>
+              <span>
+                <EditScheduled woId={row.id} scheduled={row.scheduled} />
+              </span>
+            </p>
+            <b>Notes:</b>
+            <br />
+            <p>{row.notes}</p>
+            <b>Exercises:</b>
+            <AddWorkoutExercise workoutId={row.id} user={user} />
             {row.workout_exercise.map((we: WorkoutExercise) => {
               return (
                 <>
@@ -51,7 +45,14 @@ export default async function NextWorkout({ user }: Props) {
                       .name
                   }
                   <div className="row">
-                    <span className="col">Set #</span>
+                    <span className="col">
+                      Set #
+                      <AddSet
+                        key={we.id}
+                        weId={we.id}
+                        setNo={we.workout_set.length + 1}
+                      />
+                    </span>
                     <span className="col">Weight</span>
                     <span className="col">Reps</span>
                   </div>
@@ -59,28 +60,28 @@ export default async function NextWorkout({ user }: Props) {
                     return (
                       <>
                         <div className="row">
-                          <span className="col">{set.setno}</span>
-                          <span className="col">{set.weight}lbs</span>
-                          <span className="col">{set.reps}</span>
+                          <div className="col">
+                            <EditSetNo setId={set.id} setNo={set.setno} />
+                          </div>
+
+                          <div className="col">
+                            <EditWeight setId={set.id} weight={set.weight} />
+                            lbs
+                          </div>
+                          {/*                           <span className="col">{set.weight}lbs</span>
+                           */}
+                          <div className="col">
+                            <EditReps setId={set.id} reps={set.reps} />
+                          </div>
                         </div>
                       </>
                     )
                   })}
 
-                  <AddSet
-                    key={we.id}
-                    weId={we.id}
-                    setNo={we.workout_set.length + 1}
-                  />
                   <br />
                 </>
               )
             })}
-            <AddWorkoutExercise workoutId={row.id} user={user} />
-
-            <b>Notes:</b>
-            <br />
-            <p>{row.notes}</p>
           </div>
         )
       })}

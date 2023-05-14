@@ -102,7 +102,7 @@ export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
           />
         </div>
         <div className="col d-flex align-items-end">
-          <button className="btn btn-primary">Add Set</button>
+          <button className="btn btn-primary">Save</button>
         </div>
       </div>
       {/* </div> */}
