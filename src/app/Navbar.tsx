@@ -1,39 +1,51 @@
-import React from "react"
+"use client"
+
+import { useState } from "react"
+import Link from "next/link"
+import { useAuth } from "../hooks/useAuth"
+import { NavMenu } from "./NavMenu"
 
 type Props = {}
 
 export default function Navbar({}: Props) {
-  return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="#">
-        Wholesoft Strength
-      </a>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
+  const { auth, setAuth } = useAuth()
 
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item active">
-            <a className="nav-link" href="#">
-              Home <span className="sr-only">(current)</span>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              Link
-            </a>
-          </li>
-        </ul>
+  console.log(auth)
+
+  const [activeNav, setActiveNav] = useState(false)
+  const handleToggleButtonClick = () => {
+    console.log(activeNav)
+    if (activeNav) {
+      setActiveNav(false)
+    } else {
+      setActiveNav(true)
+    }
+  }
+
+  return (
+    <>
+      <div className="navbar">
+        <div style={{ display: "flex" }}>
+          <div className="" style={{ width: "50px" }}>
+            <Link href="/">
+              <img className="logo" src="/wholesoft.svg" />
+            </Link>
+          </div>
+          <div className="" style={{ width: "190px" }}>
+            <Link href="/">
+              <h1 className="title">Wholesoft Strength</h1>
+            </Link>
+          </div>
+        </div>
+        <a href="#" className="toggle-button" onClick={handleToggleButtonClick}>
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </a>
+        <div className={activeNav ? "navbar-links active" : "navbar-links"}>
+          <NavMenu />
+        </div>
       </div>
-    </nav>
+    </>
   )
 }

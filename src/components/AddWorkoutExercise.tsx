@@ -1,5 +1,5 @@
 import React from "react"
-import CreateWorkoutExercise from "../app/workout-exercise/CreateWorkoutExercise"
+import CreateWorkoutExercise from "../app/dbtest/workout-exercise/CreateWorkoutExercise"
 import { User } from "@prisma/client"
 
 type Props = {

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import CreateWorkout from "./workout/CreateWorkout"
+import CreateWorkout from "./dbtest/workout/CreateWorkout"
 import NextWorkout from "../components/NextWorkout"
 
 async function getUser(id: number) {

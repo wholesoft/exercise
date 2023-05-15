@@ -26,7 +26,6 @@ export default function RootLayout({
       <body id="root">
         <AuthProvider>
           <Navbar />
-          <h1>Working?</h1>
           <article className="content p-3">{children}</article>
           <footer className="footer py-3">
             <Link href="/">Wholesoft Strength</Link>

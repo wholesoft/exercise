@@ -2,7 +2,7 @@
 
 import { WorkoutExercise } from "@prisma/client"
 import { useState } from "react"
-import CreateWorkoutSet from "../app/workout-sets/CreateWorkoutSet"
+import CreateWorkoutSet from "../app/dbtest/workout-sets/CreateWorkoutSet"
 type Props = {
   weId: number
   setNo: number
