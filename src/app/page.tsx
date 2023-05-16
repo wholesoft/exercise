@@ -1,49 +1,31 @@
 import Link from "next/link"
-import CreateWorkout from "./dbtest/workout/CreateWorkout"
-import NextWorkout from "../components/NextWorkout"
-
-async function getUser(id: number) {
-  const url = `http://localhost:3000/api/user/${id}`
-  console.log(url)
-  const res = await fetch(url, {
-    cache: "no-store",
-  })
-
-  const data = await res.json()
-  //console.log("fetch results")
-  //console.log(data)
-  return data
-}
 
 export default async function Home() {
-  const user = await getUser(1)
-
   return (
     <div>
-      {/*       <p>{JSON.stringify(user)}</p> */}
+      <b>Protected Routes:</b>
+      <ul>
+        <li>
+          <Link href="/workout">Workouts</Link>
+        </li>
+        <li>
+          <Link href="/account">My Account</Link>
+        </li>
+      </ul>
 
-      <div style={{ width: "700px", margin: "auto" }}>
-        <NextWorkout user={user} />
-        {/*         <h4>Next Scheduled Workout</h4> */}
-        <br />
-        <CreateWorkout />
-      </div>
-
-      <ul style={{ display: "none" }}>
-        {/*         <li>
-          <Link href="/user">User</Link>
-        </li> */}
+      <b>Public Routes:</b>
+      <ul>
         <li>
-          <Link href="/exercise">Exercise</Link>
+          <Link href="/register">Login</Link>
         </li>
         <li>
-          <Link href="/workout">Workout</Link>
+          <Link href="/register">Register</Link>
         </li>
         <li>
-          <Link href="/workout-exercise">WorkoutExercise</Link>
+          <Link href="/forgot">Forgot Password</Link>
         </li>
         <li>
-          <Link href="/workout-sets">WorkoutSets</Link>
+          <Link href="/logout">Sign Out</Link>
         </li>
       </ul>
     </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, FormEvent, ChangeEvent } from "react"
 import { useAuth } from "../../hooks/useAuth"
+import { useRouter } from "next/navigation"
 
 type Props = {}
 
@@ -11,12 +12,18 @@ const initState = {
   app: "strength.wholesoft.net",
 }
 
-export default function LoginPage({}: Props) {
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
   const [input, setInput] = useState(initState)
   const { setAuth, persist, setPersist } = useAuth()
   const [response, setResponse] = useState("")
+  const router = useRouter()
 
-  const JWT_PUBLIC_KEY: string = process.env.JWT_PUBLIC_KEY as string
+  console.log(searchParams)
+  const fromUrl = searchParams?.from
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -54,7 +61,10 @@ export default function LoginPage({}: Props) {
     if (result.success == true) {
       const { access_token, roles, email_confirmed, user_id, email } = result
       setResponse(`${email} (${user_id})`)
-      localStorage.setItem("atoken", access_token)
+      //localStorage.setItem("atoken", access_token)
+      if (fromUrl !== null) {
+        router.push(fromUrl)
+      }
     } else {
       setResponse(result.message)
     }
@@ -66,7 +76,6 @@ export default function LoginPage({}: Props) {
 
   return (
     <>
-      <pre>{JWT_PUBLIC_KEY}</pre>
       <p>{JSON.stringify(input)}</p>
       <p>{response}</p>
       <form

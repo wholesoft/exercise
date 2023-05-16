@@ -2,7 +2,7 @@
 
 import { useState, FormEvent, ChangeEvent } from "react"
 import { useRouter } from "next/navigation"
-import TrashIcon from "../../icons/Icons"
+import TrashIcon from "../../../icons/Icons"
 
 type Props = {
   id: number
