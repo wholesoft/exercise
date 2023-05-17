@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { PrismaClient } from "@prisma/client"
 
+
 type Props = {
   params: {
     id: string

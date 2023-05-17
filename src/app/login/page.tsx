@@ -61,7 +61,12 @@ export default function LoginPage({
     if (result.success == true) {
       const { access_token, roles, email_confirmed, user_id, email } = result
       setResponse(`${email} (${user_id})`)
-      //localStorage.setItem("atoken", access_token)
+      localStorage.setItem("atoken", access_token)
+      setAuth({
+        userId: user_id,
+        email: email,
+        roles: roles,
+      })
       if (fromUrl !== null) {
         router.push(fromUrl)
       }

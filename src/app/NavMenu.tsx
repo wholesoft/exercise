@@ -3,6 +3,7 @@ import { useState } from "react"
 //import useLogout from "../hooks/useLogout"
 import Link from "next/link"
 import { useAuth } from "../hooks/useAuth"
+import { getCookies, getCookie, setCookie } from "cookies-next"
 
 const NavMenu = () => {
   //const navigate = useNavigate()
@@ -25,7 +26,7 @@ const NavMenu = () => {
   // LOGGED IN USER
   if (auth?.roles?.includes(1001)) {
     items = [
-      { id: 4, link: "/", label: "My Workouts" },
+      { id: 4, link: "/workout", label: "My Workouts" },
       { id: 5, link: "/account", label: "My Account" },
       { id: 6, link: "/logout", label: "Logout" },
     ]
@@ -44,7 +45,9 @@ const NavMenu = () => {
         {items.map((item) => {
           return (
             <li key={item.id}>
-              <Link href={item.link}>{item.label}</Link>
+              <Link href={item.link} prefetch={false}>
+                {item.label}
+              </Link>
             </li>
           )
         })}

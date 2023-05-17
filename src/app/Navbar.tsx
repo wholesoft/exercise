@@ -25,6 +25,7 @@ export default function Navbar({}: Props) {
   return (
     <>
       <div className="navbar">
+        <div>{JSON.stringify(auth)}</div>
         <div style={{ display: "flex" }}>
           <div className="" style={{ width: "50px" }}>
             <Link href="/">

@@ -1,4 +1,5 @@
 import { importSPKI, jwtVerify } from "jose"
+import { NextRequest, NextResponse } from "next/server"
 
 const JWT_PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiTwtzhk++ZmKLydHzOlc
@@ -18,10 +19,14 @@ export const verifyAccessToken = async (token: string) => {
       issuer: "wholesoft",
       audience: "strength.wholesoft.net",
     })
-    //console.log(payload)
-    console.log(protectedHeader)
-    let result = { success: true, message: "Valid token" }
-    updateAuth(payload)
+    console.log(payload)
+    //console.log(protectedHeader)
+    let result = {
+      success: true,
+      message: "Valid token",
+      userId: payload.user_id,
+    }
+    //updateAuth(payload)
     //setResult(JSON.stringify(result))
     return result
   } catch (error: any) {
@@ -64,31 +69,20 @@ export const refreshToken = async () => {
   return result
 }
 
-const updateAuth = (payload: any) => {
-  /* Need to do something with:
-  {
-  user_id: 1,
-  email: 'erikthompson@yandex.com',
-  roles: [ 1001 ],
-  iat: 1684183052,
-  exp: 1684184252,
-  aud: 'strength.wholesoft.net',
-  iss: 'wholesoft'
-  }
-  */
-}
+export const getUserId = async (jwta: string) => {
+  let result = 0
+  console.log("getUserId")
 
-/* const verifyAccessToken = async (token: string | null) => {
-  try {
-    const verified = await jwtVerify(
-      token,
-      new TextEncoder().encode(JWT_PUBLIC_KEY)
-    )
-    console.log(verified.payload)
-    return verified.payload as UserJwtPayload
-  } catch (error) {
-    console.log(error)
-    return "Your token has expired. "
+  console.log(`VERIFYING ${jwta}`)
+  let verified = false
+  if (jwta !== null && jwta !== undefined) {
+    const verify = await verifyAccessToken(jwta)
+    console.log(verify)
+    if (verify.success === true) {
+      verified = true
+      result = verify.userId
+    }
   }
+  console.log(`Returning: ${result}`)
+  return result
 }
- */

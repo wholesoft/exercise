@@ -1,6 +1,9 @@
 import Link from "next/link"
 import CreateWorkout from "../dbtest/workout/CreateWorkout"
 import NextWorkout from "../../components/NextWorkout"
+import { getUserId } from "../../lib/auth"
+import { headers } from "next/headers"
+import { cookies } from "next/headers"
 
 async function getUser(id: number) {
   const url = `http://localhost:3000/api/user/${id}`
@@ -16,7 +19,13 @@ async function getUser(id: number) {
 }
 
 export default async function Workout() {
-  const user = await getUser(1)
+  const cookieStore = cookies()
+  console.log("COOKIES:")
+  console.log(cookieStore)
+  const jwta = cookieStore.get("jwta")?.value
+  console.log(jwta)
+  const userId = await getUserId(jwta)
+  const user = await getUser(userId)
 
   return (
     <div>
