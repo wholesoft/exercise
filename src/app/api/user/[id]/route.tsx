@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
-import { PrismaClient } from "@prisma/client"
-
+/* import { PrismaClient } from "@prisma/client" */
+import prisma from "@/lib/prisma"
+import { getUserId } from "@/lib/auth"
 
 type Props = {
   params: {
@@ -8,11 +9,20 @@ type Props = {
   }
 }
 
-const prisma = new PrismaClient()
+/* const prisma = new PrismaClient() */
 
 export async function GET(request: Request, { params: { id } }: Props) {
-  const parsedId = parseInt(id.toString())
-  if (isNaN(parsedId)) return NextResponse.json({ message: "Invalid ID" })
+  const accessToken = request.headers
+    .get("Authorization")
+    ?.replace("Bearer ", "")
+
+  if (!accessToken) {
+    // TODO or if !verified
+    return NextResponse.json({ message: "Missing Credentials" }) // 401
+  } else {
+    const jwtUserId = await getUserId(accessToken)
+    console.log(jwtUserId)
+  }
 
   const user = await prisma.user.findUnique({
     include: {
@@ -27,7 +37,7 @@ export async function GET(request: Request, { params: { id } }: Props) {
       },
       exercises: {},
     },
-    where: { id: parsedId },
+    where: { authUserId: id },
   })
 
   return user

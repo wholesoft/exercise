@@ -24,7 +24,7 @@ export const verifyAccessToken = async (token: string) => {
     let result = {
       success: true,
       message: "Valid token",
-      userId: payload.user_id,
+      authUserId: payload.authUserId,
     }
     //updateAuth(payload)
     //setResult(JSON.stringify(result))
@@ -57,7 +57,7 @@ export const refreshToken = async () => {
   try {
     result = await res.json()
   } catch (error) {
-    console.log(error)
+    //console.log(error)
   }
   /*   console.log(result)
   if (result.success == true) {
@@ -70,18 +70,21 @@ export const refreshToken = async () => {
 }
 
 export const getUserId = async (jwta: string) => {
-  let result = 0
+  let result = ""
   console.log("getUserId")
 
   console.log(`VERIFYING ${jwta}`)
   let verified = false
   if (jwta !== null && jwta !== undefined) {
     const verify = await verifyAccessToken(jwta)
-    console.log(verify)
+    //console.log(verify)
     if (verify.success === true) {
       verified = true
-      result = verify.userId
+      result = verify.authUserId
     }
+  }
+  if (verified == false) {
+    result = "Invalid JWT"
   }
   console.log(`Returning: ${result}`)
   return result

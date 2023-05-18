@@ -1,42 +1,62 @@
 import Link from "next/link"
-import CreateWorkout from "../dbtest/workout/CreateWorkout"
+import CreateWorkout from "../../components/CreateWorkout"
 import NextWorkout from "../../components/NextWorkout"
-import { getUserId } from "../../lib/auth"
-import { headers } from "next/headers"
-import { cookies } from "next/headers"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/next-authOptions"
+import axios from "axios"
 
-async function getUser(id: number) {
-  const url = `http://localhost:3000/api/user/${id}`
-  console.log(url)
+async function getUser(authUserId: string, atoken: string) {
+  const url = `http://localhost:3000/api/user/${authUserId}`
+  //console.log(url)
   const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${atoken}` },
     cache: "no-store",
   })
 
   const data = await res.json()
   //console.log("fetch results")
-  //console.log(data)
+  console.log(data)
   return data
 }
 
-export default async function Workout() {
-  const cookieStore = cookies()
-  console.log("COOKIES:")
-  console.log(cookieStore)
-  const jwta = cookieStore.get("jwta")?.value
-  console.log(jwta)
-  const userId = await getUserId(jwta)
-  const user = await getUser(userId)
+async function getUser2(authUserId: string, atoken: string) {
+  const url = `http://localhost:3000/api/user/${authUserId}`
 
-  return (
+  const config = {
+    headers: { Authorization: `Bearer ${atoken}` },
+  }
+  const response = await axios.get(url, config)
+  console.log("AXIOS")
+  console.log(response.data)
+  return response.data
+}
+
+export default async function Workout() {
+  const session = await getServerSession(authOptions)
+
+  console.log(session)
+
+  let user = null
+  if (session?.user != null) {
+    const authUserId = session.user.authUserId
+    const atoken = session.user.access_token
+    user = await getUser(authUserId, atoken)
+  }
+  //console.log(session)
+  //console.log(user)
+
+  return user !== null ? (
     <div>
-      {/*       <p>{JSON.stringify(user)}</p> */}
+      {/*       <p>{JSON.stringify(session)}</p>
+      <p>{JSON.stringify(user)}</p> */}
 
       <div style={{ width: "700px", margin: "auto" }}>
         <NextWorkout user={user} />
-        {/*         <h4>Next Scheduled Workout</h4> */}
         <br />
-        <CreateWorkout />
+        <CreateWorkout user={user} />
       </div>
     </div>
+  ) : (
+    <div>Loading...</div>
   )
 }

@@ -1,5 +1,5 @@
 import React from "react"
-import CreateWorkoutExercise from "../app/dbtest/workout-exercise/CreateWorkoutExercise"
+import CreateWorkoutExercise from "./CreateWorkoutExercise"
 import { User } from "@prisma/client"
 
 type Props = {
@@ -12,7 +12,7 @@ export default function AddWorkoutExercise({ workoutId, user }: Props) {
 
   return (
     <div>
-      <CreateWorkoutExercise workoutId={workoutId} />
+      <CreateWorkoutExercise user={user} workoutId={workoutId} />
     </div>
   )
 }

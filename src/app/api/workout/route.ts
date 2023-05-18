@@ -49,7 +49,7 @@ export async function POST(request: Request) {
   if (!user_id || !timestamp || !notes || scheduled === null)
     return NextResponse.json({ message: "Missing required data." })
   const data = { user_id, timestamp, notes, scheduled }
-
+  console.log(data)
   const newRecord = await prisma.workout.create({ data })
   return NextResponse.json(newRecord)
 }

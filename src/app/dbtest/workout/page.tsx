@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import CreateWorkout from "./CreateWorkout"
+import CreateWorkout from "../../../components/CreateWorkout"
 import DeleteWorkout from "./DeleteWorkout"
 import { timeStamp } from "console"
 

@@ -1,23 +1,22 @@
 import React from "react"
 import AddWorkoutExercise from "./AddWorkoutExercise"
 import AddSet from "./AddSet"
-import EditSetNo from "./editfield/EditSetNo"
-import EditReps from "./editfield/EditReps"
-import EditWeight from "./editfield/EditWeight"
+
 import EditScheduled from "./editfield/EditScheduled"
 
 import { Exercise, User, WorkoutExercise, WorkoutSets } from "@prisma/client"
+import ListSets from "./ListSets"
 type Props = {
   user: User
 }
 
-export default async function NextWorkout({ user }: Props) {
+export default function NextWorkout({ user }: Props) {
   //const data = await getWorkouts()
   const workouts = user.workouts.filter((w) => w.scheduled === true)
   const exercises = user.exercises
 
   return (
-    <div>
+    <>
       {workouts.map((row) => {
         let workoutDate = new Date(row.timestamp)
         workoutDate = new Date(
@@ -25,7 +24,7 @@ export default async function NextWorkout({ user }: Props) {
         )
 
         return (
-          <div>
+          <div key={row.id}>
             <p>
               <span>{workoutDate.toString().slice(0, 15)} </span>
               <span>
@@ -39,12 +38,12 @@ export default async function NextWorkout({ user }: Props) {
             <AddWorkoutExercise workoutId={row.id} user={user} />
             {row.workout_exercise.map((we: WorkoutExercise) => {
               return (
-                <>
+                <div key={we.id}>
                   {
                     exercises.filter((e: Exercise) => e.id == we.exercise_id)[0]
                       .name
                   }
-                  <div className="row">
+                  <div className="row" key={we.id}>
                     <span className="col">
                       Set #
                       <AddSet
@@ -56,35 +55,15 @@ export default async function NextWorkout({ user }: Props) {
                     <span className="col">Weight</span>
                     <span className="col">Reps</span>
                   </div>
-                  {we.workout_set.map((set: WorkoutSets) => {
-                    return (
-                      <>
-                        <div className="row">
-                          <div className="col">
-                            <EditSetNo setId={set.id} setNo={set.setno} />
-                          </div>
-
-                          <div className="col">
-                            <EditWeight setId={set.id} weight={set.weight} />
-                            lbs
-                          </div>
-                          {/*                           <span className="col">{set.weight}lbs</span>
-                           */}
-                          <div className="col">
-                            <EditReps setId={set.id} reps={set.reps} />
-                          </div>
-                        </div>
-                      </>
-                    )
-                  })}
+                  <ListSets sets={we.workout_set} />
 
                   <br />
-                </>
+                </div>
               )
             })}
           </div>
         )
       })}
-    </div>
+    </>
   )
 }

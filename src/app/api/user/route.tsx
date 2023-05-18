@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server"
-import { PrismaClient, User } from "@prisma/client"
+import { User } from "@prisma/client"
+import prisma from "@/lib/prisma"
 
-const prisma = new PrismaClient()
+//const prisma = new PrismaClient()
+
+interface RequestBody {
+  email: string
+}
 
 export async function GET(request: Request) {
   const results = await prisma.user.findMany()
@@ -9,10 +14,13 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { email }: Partial<User> = await request.json()
+  console.log("CREATE LOCAL USER: POSTED")
+  const { email, authUserId }: Partial<User> = await request.json()
+  const data = { email, authUserId }
+  console.log(data)
 
-  if (!email) return NextResponse.json({ message: "Missing required data." })
-  const data = { email }
+  if (!email || !authUserId)
+    return NextResponse.json({ message: "Missing required data." })
 
   const newRecord = await prisma.user.create({ data })
   return NextResponse.json(newRecord)

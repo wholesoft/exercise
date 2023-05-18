@@ -1,44 +1,29 @@
+"use client"
+
 import { useState } from "react"
-//import { Menu } from "primereact/menu"
-//import useLogout from "../hooks/useLogout"
 import Link from "next/link"
-import { useAuth } from "../hooks/useAuth"
-import { getCookies, getCookie, setCookie } from "cookies-next"
+import { signIn, signOut, useSession } from "next-auth/react"
 
 const NavMenu = () => {
-  //const navigate = useNavigate()
-  //const logout = useLogout()
-  const { auth } = useAuth()
-
-  /*   const signOut = async () => {
-    await logout()
-    navigate("/")
-  } */
-
-  //{ id: 1, link: "/", label: "Home" },
+  const { data: session } = useSession()
+  //console.log(session)
 
   // NOT LOGGED IN
-  let items = [
-    { id: 2, link: "/login", label: "Login" },
-    { id: 3, link: "/register", label: "Register" },
-  ]
+  let items = [{ id: 3, link: "/auth/register", label: "Register" }]
 
-  // LOGGED IN USER
-  if (auth?.roles?.includes(1001)) {
-    items = [
-      { id: 4, link: "/workout", label: "My Workouts" },
-      { id: 5, link: "/account", label: "My Account" },
-      { id: 6, link: "/logout", label: "Logout" },
-    ]
+  if (session?.user != null) {
+    // LOGGED IN USER
+    if (session.user.roles.includes(1001)) {
+      items = [
+        { id: 4, link: "/workout", label: "My Workouts" },
+        { id: 5, link: "/account", label: "My Account" },
+      ]
+    }
+    // ADMIN
+    if (session.user.roles.includes(2001)) {
+      items.push({ id: 7, link: "/admin", label: "Admin" })
+    }
   }
-  //signOut()
-  //hideSidebar()
-
-  // ADMIN
-  if (auth?.roles?.includes(2001)) {
-    items.push({ id: 7, link: "/admin", label: "Admin" })
-  }
-
   return (
     <>
       <ul>
@@ -51,6 +36,27 @@ const NavMenu = () => {
             </li>
           )
         })}
+
+        {session?.user ? (
+          <>
+            <li>
+              <Link href="/account" prefetch={false}>
+                {session.user.email}
+              </Link>
+            </li>
+            <li>
+              <Link href="#" onClick={() => signOut()}>
+                Sign Out
+              </Link>
+            </li>
+          </>
+        ) : (
+          <li>
+            <Link href="#" onClick={() => signIn()}>
+              Sign In
+            </Link>
+          </li>
+        )}
       </ul>
     </>
   )

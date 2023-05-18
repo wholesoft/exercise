@@ -19,7 +19,7 @@ export default async function Home() {
           <Link href="/register">Login</Link>
         </li>
         <li>
-          <Link href="/register">Register</Link>
+          <Link href="/auth/register">Register</Link>
         </li>
         <li>
           <Link href="/forgot">Forgot Password</Link>

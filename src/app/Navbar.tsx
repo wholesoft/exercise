@@ -2,16 +2,11 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { useAuth } from "../hooks/useAuth"
 import { NavMenu } from "./NavMenu"
 
 type Props = {}
 
 export default function Navbar({}: Props) {
-  const { auth, setAuth } = useAuth()
-
-  console.log(auth)
-
   const [activeNav, setActiveNav] = useState(false)
   const handleToggleButtonClick = () => {
     console.log(activeNav)
@@ -25,7 +20,6 @@ export default function Navbar({}: Props) {
   return (
     <>
       <div className="navbar">
-        <div>{JSON.stringify(auth)}</div>
         <div style={{ display: "flex" }}>
           <div className="" style={{ width: "50px" }}>
             <Link href="/">

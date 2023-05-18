@@ -3,19 +3,26 @@
 import { useState, FormEvent, ChangeEvent } from "react"
 import { useRouter } from "next/navigation"
 import { Form } from "react-bootstrap"
+import { User } from "@prisma/client"
 
 let initDate = new Date()
 const offset = initDate.getTimezoneOffset()
 let initLocalDate = new Date(initDate.getTime() - offset * 60 * 1000)
 
-const initState = {
-  notes: "",
-  user_id: 1,
-  timestamp: initLocalDate,
-  scheduled: false,
+type Props = {
+  user: User
 }
 
-export default function CreateWorkout() {
+export default function CreateWorkout({ user }: Props) {
+  //console.log(user)
+  //console.log(user.id)
+  const initState = {
+    notes: "",
+    user_id: user.id,
+    timestamp: initLocalDate,
+    scheduled: false,
+  }
+
   const [data, setData] = useState(initState)
   const router = useRouter()
   const [step, setStep] = useState(1)
