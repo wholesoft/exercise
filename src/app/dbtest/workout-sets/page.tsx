@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import CreateWorkoutSet from "./CreateWorkoutSet"
+import CreateWorkoutSet from "../../../components/CreateWorkoutSet"
 import DeleteWorkoutSet from "./DeleteWorkoutSet"
 
 type Props = {}

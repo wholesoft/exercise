@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server"
-import { Exercise, PrismaClient } from "@prisma/client"
+import { Exercise } from "@prisma/client"
+import prisma from "@/lib/prisma"
 
-const prisma = new PrismaClient()
+//const prisma = new PrismaClient()
 
 export async function GET(request: Request) {
   const exercises = await prisma.exercise.findMany({

@@ -15,7 +15,7 @@ async function getUser(authUserId: string, atoken: string) {
 
   const data = await res.json()
   //console.log("fetch results")
-  console.log(data)
+  //console.log(data)
   return data
 }
 
@@ -26,8 +26,8 @@ async function getUser2(authUserId: string, atoken: string) {
     headers: { Authorization: `Bearer ${atoken}` },
   }
   const response = await axios.get(url, config)
-  console.log("AXIOS")
-  console.log(response.data)
+  //console.log("AXIOS")
+  //console.log(response.data)
   return response.data
 }
 

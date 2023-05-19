@@ -19,7 +19,7 @@ export const verifyAccessToken = async (token: string) => {
       issuer: "wholesoft",
       audience: "strength.wholesoft.net",
     })
-    console.log(payload)
+    //console.log(payload)
     //console.log(protectedHeader)
     let result = {
       success: true,
@@ -71,9 +71,9 @@ export const refreshToken = async () => {
 
 export const getUserId = async (jwta: string) => {
   let result = ""
-  console.log("getUserId")
+  //console.log("getUserId")
 
-  console.log(`VERIFYING ${jwta}`)
+  //console.log(`VERIFYING ${jwta}`)
   let verified = false
   if (jwta !== null && jwta !== undefined) {
     const verify = await verifyAccessToken(jwta)
@@ -86,6 +86,6 @@ export const getUserId = async (jwta: string) => {
   if (verified == false) {
     result = "Invalid JWT"
   }
-  console.log(`Returning: ${result}`)
+  //console.log(`Returning: ${result}`)
   return result
 }

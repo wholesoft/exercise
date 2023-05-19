@@ -16,12 +16,8 @@ const NavMenu = () => {
     if (session.user.roles.includes(1001)) {
       items = [
         { id: 4, link: "/workout", label: "My Workouts" },
-        { id: 5, link: "/account", label: "My Account" },
+        { id: 5, link: "/auth/account", label: "My Account" },
       ]
-    }
-    // ADMIN
-    if (session.user.roles.includes(2001)) {
-      items.push({ id: 7, link: "/admin", label: "Admin" })
     }
   }
   return (

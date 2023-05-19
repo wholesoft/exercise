@@ -16,12 +16,13 @@ export async function GET(request: Request, { params: { id } }: Props) {
     .get("Authorization")
     ?.replace("Bearer ", "")
 
-  if (!accessToken) {
-    // TODO or if !verified
-    return NextResponse.json({ message: "Missing Credentials" }) // 401
-  } else {
-    const jwtUserId = await getUserId(accessToken)
-    console.log(jwtUserId)
+  let jwtUserId = ""
+  if (accessToken) {
+    jwtUserId = await getUserId(accessToken)
+  }
+  console.log(`GET USER: (${jwtUserId})`)
+  if (jwtUserId === "Invalid JWT" || jwtUserId === "") {
+    return NextResponse.json({ message: "INVALID Credentials" }) // 401
   }
 
   const user = await prisma.user.findUnique({
@@ -37,7 +38,7 @@ export async function GET(request: Request, { params: { id } }: Props) {
       },
       exercises: {},
     },
-    where: { authUserId: id },
+    where: { authUserId: jwtUserId },
   })
 
   return user

@@ -1,9 +1,7 @@
 import { NextResponse, NextRequest } from "next/server"
 import { NextApiRequest, NextApiResponse } from "next"
-import { PrismaClient, User, Workout } from "@prisma/client"
-import { useRouter } from "next/router"
-
-const prisma = new PrismaClient()
+import { User, Workout } from "@prisma/client"
+import prisma from "@/lib/prisma"
 
 function getQueryStringParams(url: string) {
   let result = {}

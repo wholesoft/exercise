@@ -46,7 +46,7 @@ export default function EditSetNo({ setId, setNo }: Props) {
       cancelButtonLabel="Cancel"
       attributes={{ name: "textInput", id: 1 }}
       instructions=""
-      value={setNo}
+      value={`${setNo}`}
     />
   )
 }

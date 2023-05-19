@@ -33,7 +33,7 @@ export default function EditWeight({ setId, weight }: Props) {
       cancelButtonLabel="Cancel"
       attributes={{ name: "textInput", id: 1 }}
       instructions=""
-      value={weight}
+      value={`${weight}`}
     />
   )
 }

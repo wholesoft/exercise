@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server"
-import { PrismaClient, User, Workout, WorkoutSets } from "@prisma/client"
-
-const prisma = new PrismaClient()
+import { User, Workout, WorkoutSets } from "@prisma/client"
+import prisma from "@/lib/prisma"
 
 export async function GET(request: Request) {
   const results = await prisma.workoutSets.findMany()

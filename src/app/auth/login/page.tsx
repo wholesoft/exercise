@@ -4,6 +4,7 @@ import { useState, useEffect, FormEvent, ChangeEvent } from "react"
 /* import { useAuth } from "../../../hooks/useAuth" */
 import { useRouter } from "next/navigation"
 import { signIn } from "next-auth/react"
+import Link from "next/link"
 
 type Props = {}
 
@@ -44,13 +45,9 @@ export default function LoginPage({
   }
 
   return (
-    <>
-      <p>{JSON.stringify(input)}</p>
+    <div>
       <p>{response}</p>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col mx-auto max-w-3xl p-6"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col">
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
             Email{" "}
@@ -83,6 +80,14 @@ export default function LoginPage({
 
         <button className="btn btn-primary">Submit</button>
       </form>
-    </>
+      <div className="mt-2">
+        <Link href="/auth/forgot" prefetch={false}>
+          Forgot Password?
+        </Link>
+        <Link className="ms-3" href="/auth/register" prefetch={false}>
+          Register
+        </Link>
+      </div>
+    </div>
   )
 }

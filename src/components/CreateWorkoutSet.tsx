@@ -64,7 +64,7 @@ export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
             id="setNo"
             name="setNo"
             placeholder="Set"
-            value={data.setNo}
+            value={`${data.setNo}`}
             onChange={handleChange}
             autoFocus
           />
@@ -80,7 +80,7 @@ export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
             id="weight"
             name="weight"
             placeholder="Weight"
-            value={data.weight}
+            value={`${data.weight}`}
             onChange={handleChange}
             autoFocus
           />

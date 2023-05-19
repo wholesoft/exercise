@@ -33,7 +33,7 @@ export default function EditReps({ setId, reps }: Props) {
       cancelButtonLabel="Cancel"
       attributes={{ name: "textInput", id: 1 }}
       instructions=""
-      value={reps}
+      value={`${reps}`}
     />
   )
 }

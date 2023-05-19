@@ -6,27 +6,30 @@ export default async function Home() {
       <b>Protected Routes:</b>
       <ul>
         <li>
-          <Link href="/workout">Workouts</Link>
+          <Link href="/workout" prefetch={false}>
+            Workouts
+          </Link>
         </li>
         <li>
-          <Link href="/account">My Account</Link>
+          <Link href="/auth/account" prefetch={false}>
+            My Account
+          </Link>
         </li>
       </ul>
 
       <b>Public Routes:</b>
       <ul>
         <li>
-          <Link href="/register">Login</Link>
+          <Link href="/auth/register" prefetch={false}>
+            Register
+          </Link>
         </li>
         <li>
-          <Link href="/auth/register">Register</Link>
+          <Link href="/auth/forgot" prefetch={false}>
+            Forgot Password
+          </Link>
         </li>
-        <li>
-          <Link href="/forgot">Forgot Password</Link>
-        </li>
-        <li>
-          <Link href="/logout">Sign Out</Link>
-        </li>
+        {/*  Login and Signout are public but controlled by next-auth */}
       </ul>
     </div>
   )
