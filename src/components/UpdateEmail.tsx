@@ -3,7 +3,7 @@ import { User } from "@prisma/client"
 import React, { useState, FormEvent, ChangeEvent } from "react"
 
 type Props = {
-  user: User
+  user: any
 }
 
 export default function UpdateEmail({ user }: Props) {
@@ -18,7 +18,7 @@ export default function UpdateEmail({ user }: Props) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { email } = input
-    const res = await fetch("http://localhost:3456/update_email_address", {
+    const res = await fetch(`${process.env.AUTH_URL}/update_email_address`, {
       method: "POST",
       credentials: "include",
       mode: "cors",

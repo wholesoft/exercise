@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { User } from "@prisma/client"
 
 type Props = {
-  user: User
+  user: any
   workoutId: number
 }
 
@@ -26,7 +26,7 @@ export default function CreateWorkoutExercise({ user, workoutId }: Props) {
     let exercise_id = exercise
     if (exercise === "other") {
       // create it and get the id
-      const res = await fetch("http://localhost:3000/api/exercise", {
+      const res = await fetch(`${process.env.APP_URL}/api/exercise`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export default function CreateWorkoutExercise({ user, workoutId }: Props) {
     }
 
     // Send data to API route
-    const res = await fetch("http://localhost:3000/api/workout-exercise", {
+    const res = await fetch(`${process.env.APP_URL}/api/workout-exercise`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

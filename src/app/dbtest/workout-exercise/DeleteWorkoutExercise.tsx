@@ -12,7 +12,7 @@ export default function DeleteWorkoutExercise(props: any) {
   const { workoutExercise } = props
 
   const deleteWorkoutExercise = async () => {
-    console.log(`Delete Workout Exercise: ${workout.id}`)
+    console.log(`Delete Workout Exercise: ${workoutExercise.id}`)
     console.log(workoutExercise)
     let data = JSON.stringify({ id: workoutExercise.id })
     console.log(data)

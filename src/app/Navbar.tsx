@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { NavMenu } from "./NavMenu"
+import Image from "next/image"
 
 type Props = {}
 
@@ -23,7 +24,13 @@ export default function Navbar({}: Props) {
         <div style={{ display: "flex" }}>
           <div className="" style={{ width: "50px" }}>
             <Link href="/">
-              <img className="logo" src="/wholesoft.svg" />
+              <Image
+                className="logo"
+                src="/wholesoft.svg"
+                alt="logo"
+                width="50"
+                height="50"
+              />
             </Link>
           </div>
           <div className="" style={{ width: "190px" }}>

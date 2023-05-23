@@ -13,13 +13,16 @@ export default function EditSetNo({ setId, setNo }: Props) {
     console.log(`UPDAET ${setId} from ${setNo} to ${value}`)
 
     // Send data to API route
-    const res = await fetch(`http://localhost:3000/api/workout-sets/${setId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ setNo: parseInt(value) }),
-    })
+    const res = await fetch(
+      `${process.env.APP_URL}/api/workout-sets/${setId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ setNo: parseInt(value) }),
+      }
+    )
     console.log(res)
     //const result = await res.json()
     //console.log(result)

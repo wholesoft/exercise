@@ -13,7 +13,7 @@ export default function EditScheduled({ woId, scheduled }: Props) {
     // Send data to API route
     let parsedValue = value === "true"
     console.log(value)
-    const res = await fetch(`http://localhost:3000/api/workout/${woId}`, {
+    const res = await fetch(`${process.env.APP_URL}/api/workout/${woId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

@@ -10,7 +10,7 @@ type Props = {
 export default function ListSets({ sets }: Props) {
   return (
     <>
-      {sets.map((set: WorkoutSets) => {
+      {sets.map((set: any) => {
         return (
           <div className="row" key={set.id}>
             <div className="col">

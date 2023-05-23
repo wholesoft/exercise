@@ -2,23 +2,23 @@
 
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { useAuth } from "../../../hooks/useAuth"
+/* import useAuth from "../../../hooks/useAuth" */
 import { refreshToken } from "../../../lib/auth"
 type Props = {}
 
-export default async function page({
+export default async function Refresh({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
   const router = useRouter()
   const [fired, setFired] = useState(false)
-  const { setAuth } = useAuth()
+  /*   const { setAuth } = useAuth() */
 
   //console.log(searchParams)
   const fromUrl = searchParams?.from
   console.log("wtf")
-  useEffect(() => {
+  /*  useEffect(() => {
     console.log("USE EFFECT")
 
     const tryRefreshingToken = async () => {
@@ -33,11 +33,7 @@ export default async function page({
           email: email,
           roles: roles,
         })
-        /*         setAuth({
-          userId: user_id,
-          email: email,
-          roles: roles,
-        }) */
+
         if (fromUrl !== null) {
           console.log("Redirecting to: " + fromUrl)
           router.push(fromUrl)
@@ -63,7 +59,7 @@ export default async function page({
       tryRefreshingToken()
       setFired(true)
     }
-  }, [])
+  }, []) */
 
   return <div>Refresh Token</div>
 }

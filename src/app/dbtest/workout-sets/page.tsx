@@ -26,7 +26,7 @@ export default async function WorkoutsPage({}: Props) {
           return <Set key={set.id} set={set} />
         })}
       </div>
-      <CreateWorkoutSet />
+      {/*   <CreateWorkoutSet /> */}
     </div>
   )
 }

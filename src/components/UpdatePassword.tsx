@@ -6,7 +6,7 @@ type Props = {
   accessToken: string | null
 }
 
-export default function UpdatePassword({ resetToken, accessToken }: Props) {
+export default function UpdatePassword({ resetToken, accessToken }: any) {
   const [input, setInput] = useState({ password: "", confirmPassword: "" })
   const [response, setResponse] = useState()
 
@@ -17,11 +17,11 @@ export default function UpdatePassword({ resetToken, accessToken }: Props) {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    let result = { success: false, message: "Error." }
+    let result: any = { success: false, message: "Error." }
     if (resetToken?.length > 0) {
       const { password, confirmPassword } = input
       const res = await fetch(
-        "http://localhost:3456/update_password_with_token",
+        `${process.env.AUTH_URL}/update_password_with_token`,
         {
           method: "POST",
           credentials: "include",

@@ -1,13 +1,12 @@
 import React from "react"
 import AddWorkoutExercise from "./AddWorkoutExercise"
 import AddSet from "./AddSet"
-
 import EditScheduled from "./editfield/EditScheduled"
-
 import { Exercise, User, WorkoutExercise, WorkoutSets } from "@prisma/client"
+
 import ListSets from "./ListSets"
 type Props = {
-  user: User
+  user: any
 }
 
 export default function NextWorkout({ user }: Props) {
@@ -16,12 +15,12 @@ export default function NextWorkout({ user }: Props) {
   let result = <div>Loading...</div>
 
   if (user) {
-    const workouts = user?.workouts?.filter((w) => w.scheduled === true)
+    const workouts = user?.workouts?.filter((w: any) => w.scheduled === true)
     const exercises = user?.exercises
 
     result = (
       <>
-        {workouts?.map((row) => {
+        {workouts?.map((row: any) => {
           let workoutDate = new Date(row.timestamp)
           workoutDate = new Date(
             workoutDate.getTime() + user.timezone * 60 * 1000
@@ -40,7 +39,7 @@ export default function NextWorkout({ user }: Props) {
               <p>{row.notes}</p>
               <b>Exercises:</b>
               <AddWorkoutExercise workoutId={row.id} user={user} />
-              {row.workout_exercise.map((we: WorkoutExercise) => {
+              {row.workout_exercise.map((we: any) => {
                 return (
                   <div key={we.id}>
                     {

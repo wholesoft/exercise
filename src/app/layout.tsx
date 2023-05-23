@@ -1,3 +1,4 @@
+import "bootstrap/dist/css/bootstrap.css"
 import "./globals.css"
 import { SessionProvider } from "next-auth/react"
 import Link from "next/link"

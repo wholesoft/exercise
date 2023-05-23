@@ -26,7 +26,7 @@ export default async function SelectWorkout({ userId, handleChange }: Props) {
       <p>{workouts.length}</p>
       <select onChange={handleChange}>
         {workouts.map((workout: any) => {
-          return <option>{workout.timestamp}</option>
+          return <option key={workout.id}>{workout.timestamp}</option>
         })}
       </select>
     </>

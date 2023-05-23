@@ -76,7 +76,7 @@ export const getUserId = async (jwta: string) => {
   //console.log(`VERIFYING ${jwta}`)
   let verified = false
   if (jwta !== null && jwta !== undefined) {
-    const verify = await verifyAccessToken(jwta)
+    const verify: any = await verifyAccessToken(jwta)
     //console.log(verify)
     if (verify.success === true) {
       verified = true

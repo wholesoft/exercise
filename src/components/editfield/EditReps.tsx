@@ -11,13 +11,16 @@ type Props = {
 export default function EditReps({ setId, reps }: Props) {
   const save = async (value: string) => {
     // Send data to API route
-    const res = await fetch(`http://localhost:3000/api/workout-sets/${setId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ reps: parseInt(value) }),
-    })
+    const res = await fetch(
+      `${process.env.APP_URL}/api/workout-sets/${setId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ reps: parseInt(value) }),
+      }
+    )
   }
   const cancel = () => {
     console.log("Cancelled")

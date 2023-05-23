@@ -8,7 +8,7 @@ type Props = {
 }
 
 async function confirmEmail(id: string) {
-  const url = `http://localhost:3456/confirm/${id}`
+  const url = `${process.env.AUTH_URL}/confirm/${id}`
   const res = await fetch(url, {
     cache: "no-store",
   })

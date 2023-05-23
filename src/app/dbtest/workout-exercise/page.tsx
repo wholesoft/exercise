@@ -32,7 +32,7 @@ export default async function WorkoutExercisePage({}: Props) {
           )
         })}
       </div>
-      <CreateWorkoutExercise />
+      {/*     <CreateWorkoutExercise /> */}
     </div>
   )
 }

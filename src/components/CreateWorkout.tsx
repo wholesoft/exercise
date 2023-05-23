@@ -33,7 +33,7 @@ export default function CreateWorkout({ user }: Props) {
     const { user_id, timestamp, notes, scheduled } = data
 
     // Send data to API route
-    const res = await fetch("http://localhost:3000/api/workout", {
+    const res = await fetch("${process.env.APP_URL}/api/workout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export default function CreateWorkout({ user }: Props) {
     setStep(3)
   }
 
-  const handleDateChange = (value) => {
+  const handleDateChange = (value: any) => {
     setData((prevData) => ({
       ...prevData,
       timestamp: new Date(value),

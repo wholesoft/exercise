@@ -19,7 +19,7 @@ export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
     const { weId, setNo, reps, weight } = data
 
     // Send data to API route
-    const res = await fetch("http://localhost:3000/api/workout-sets", {
+    const res = await fetch(`${process.env.APP_URL}/api/workout-sets`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

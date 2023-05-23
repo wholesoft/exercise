@@ -27,7 +27,7 @@ export default async function WorkoutsPage({}: Props) {
           return <Workout key={workout.id} workout={workout} />
         })}
       </div>
-      <CreateWorkout />
+      {/*   <CreateWorkout /> */}
     </div>
   )
 }

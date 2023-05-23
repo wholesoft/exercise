@@ -6,7 +6,7 @@ import { authOptions } from "@/lib/next-authOptions"
 import axios from "axios"
 
 async function getUser(authUserId: string, atoken: string) {
-  const url = `http://localhost:3000/api/user/${authUserId}`
+  const url = `${process.env.APP_URL}/api/user/${authUserId}`
   //console.log(url)
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${atoken}` },
@@ -32,15 +32,17 @@ async function getUser2(authUserId: string, atoken: string) {
 }
 
 export default async function Workout() {
-  const session = await getServerSession(authOptions)
+  const session: any = await getServerSession(authOptions)
 
   console.log(session)
 
   let user = null
-  if (session?.user != null) {
-    const authUserId = session.user.authUserId
-    const atoken = session.user.access_token
-    user = await getUser(authUserId, atoken)
+  if (session != null) {
+    if (session.user != null) {
+      const authUserId = session.user.authUserId
+      const atoken = session.user.access_token
+      user = await getUser(authUserId, atoken)
+    }
   }
   //console.log(session)
   //console.log(user)

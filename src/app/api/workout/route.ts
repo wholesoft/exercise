@@ -4,7 +4,7 @@ import { User, Workout } from "@prisma/client"
 import prisma from "@/lib/prisma"
 
 function getQueryStringParams(url: string) {
-  let result = {}
+  let result: any = {}
   if (url.indexOf("?") > 0) {
     let paramString = url.slice(url.indexOf("?") + 1)
     let paramArray = paramString.split("&")
@@ -17,7 +17,7 @@ function getQueryStringParams(url: string) {
 }
 
 export async function GET(request: NextRequest) {
-  let result = ""
+  let result: any = ""
   const { url } = request
   const params = getQueryStringParams(url)
   const { scheduled } = params

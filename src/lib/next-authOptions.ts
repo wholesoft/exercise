@@ -25,7 +25,7 @@ export const authOptions: any = {
       },
       async authorize(credentials, req) {
         const { email, password } = credentials as any
-        const res = await fetch("http://localhost:3456/login", {
+        const res = await fetch(`${process.env.AUTH_URL}/login`, {
           method: "POST",
           credentials: "include",
           mode: "cors",
@@ -58,10 +58,18 @@ export const authOptions: any = {
   },
 
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: any; user: any }) {
       return { ...token, ...user }
     },
-    async session({ session, token, user }) {
+    async session({
+      session,
+      token,
+      user,
+    }: {
+      session: any
+      token: any
+      user: any
+    }) {
       // Send properties to the client, like an access_token from a provider.
       session.user = token as any
 
