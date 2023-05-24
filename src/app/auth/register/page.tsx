@@ -29,7 +29,7 @@ export default function RegisterPage() {
     e.preventDefault()
     console.log(JSON.stringify(input))
     const { email, password, confirmPassword, app } = input
-    const res = await fetch(`${process.env.AUTH_URL}/register`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/register`, {
       method: "POST",
       credentials: "include",
       mode: "cors",
