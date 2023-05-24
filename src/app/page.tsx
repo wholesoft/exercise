@@ -3,7 +3,7 @@ import Link from "next/link"
 export default async function Home() {
   return (
     <div>
-      <h4>Test 3</h4>
+      <h4>Test 4</h4>
       <b>Protected Routes:</b>
       <ul>
         <li>
