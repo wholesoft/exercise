@@ -43,16 +43,19 @@ export default function CreateWorkoutExercise({ user, workoutId }: Props) {
     }
 
     // Send data to API route
-    const res = await fetch(`${process.env.APP_URL}/api/workout-exercise`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        exercise_id: +exercise_id,
-        workout_id: workoutId,
-      }),
-    })
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/workout-exercise`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          exercise_id: +exercise_id,
+          workout_id: workoutId,
+        }),
+      }
+    )
     console.log(res)
     //const result = await res.json()
     //console.log(result)
