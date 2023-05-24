@@ -43,7 +43,7 @@ export const verifyAccessToken = async (token: string) => {
 
 export const refreshToken = async () => {
   //const response = await axiosAuth.get("/refresh", { withCredentials: true })
-  const res = await fetch("http://localhost:3456/refresh", {
+  const res = await fetch(`${process.env.AUTH_URL}/refresh`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
