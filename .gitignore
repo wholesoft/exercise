@@ -38,3 +38,6 @@ next-env.d.ts
 # test
 /src/app/test
 /src/app/api/test
+
+# deployment script
+ecosystem.config.js
