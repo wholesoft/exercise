@@ -12,7 +12,7 @@ export default function EditWeight({ setId, weight }: Props) {
   const save = async (value: string) => {
     // Send data to API route
     const res = await fetch(
-      `${process.env.APP_URL}/api/workout-sets/${setId}`,
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/workout-sets/${setId}`,
       {
         method: "PATCH",
         headers: {

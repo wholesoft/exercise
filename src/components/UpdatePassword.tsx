@@ -41,21 +41,24 @@ export default function UpdatePassword({ resetToken, accessToken }: any) {
       result = await res.json()
     } else {
       const { password, confirmPassword } = input
-      const res = await fetch("http://localhost:3456/update_password", {
-        method: "POST",
-        credentials: "include",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": "true",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          password,
-          confirm_password: confirmPassword,
-        }),
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_AUTH_URL}/update_password`,
+        {
+          method: "POST",
+          credentials: "include",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": "true",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            password,
+            confirm_password: confirmPassword,
+          }),
+        }
+      )
       result = await res.json()
     }
 

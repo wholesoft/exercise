@@ -18,20 +18,23 @@ export default function UpdateEmail({ user }: Props) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { email } = input
-    const res = await fetch(`${process.env.AUTH_URL}/update_email_address`, {
-      method: "POST",
-      credentials: "include",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": "true",
-        Authorization: `Bearer ${user.access_token}`,
-      },
-      body: JSON.stringify({
-        email,
-      }),
-    })
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/update_email_address`,
+      {
+        method: "POST",
+        credentials: "include",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": "true",
+          Authorization: `Bearer ${user.access_token}`,
+        },
+        body: JSON.stringify({
+          email,
+        }),
+      }
+    )
 
     const result = await res.json()
     console.log(result)

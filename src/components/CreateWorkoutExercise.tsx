@@ -26,13 +26,16 @@ export default function CreateWorkoutExercise({ user, workoutId }: Props) {
     let exercise_id = exercise
     if (exercise === "other") {
       // create it and get the id
-      const res = await fetch(`${process.env.APP_URL}/api/exercise`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: newExercise, user_id: userId }),
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/exercise`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: newExercise, user_id: userId }),
+        }
+      )
       console.log("RESULT FROM ADDING EXERCISE")
       const result = await res.json()
       console.log(result)
