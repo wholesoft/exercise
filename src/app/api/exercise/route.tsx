@@ -4,20 +4,22 @@ import prisma from "@/lib/prisma"
 
 //const prisma = new PrismaClient()
 
-export async function GET(request: Request) {
+/* export async function GET(request: Request) {
   const exercises = await prisma.exercise.findMany({
     where: { user_id: 1 },
   })
   return new NextResponse(JSON.stringify(exercises))
-}
+} */
 
 export async function POST(request: Request) {
+  console.log("POST: ADD EXERCISE")
   const { user_id, name }: Partial<Exercise> = await request.json()
 
   if (!user_id || !name)
     return NextResponse.json({ message: "Missing required data." })
   const data = { user_id, name }
-
+  console.log("Data:")
+  console.log(data)
   const newExercise = await prisma.exercise.create({ data })
   return NextResponse.json(newExercise)
 }

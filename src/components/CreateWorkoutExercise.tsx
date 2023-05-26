@@ -22,9 +22,11 @@ export default function CreateWorkoutExercise({ user, workoutId }: Props) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    console.log("LET'S GO")
     let { exercise, newExercise } = input
     let exercise_id = exercise
     if (exercise === "other") {
+      console.log("ADD OTHER")
       // create it and get the id
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/exercise`,
