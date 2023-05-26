@@ -2,7 +2,7 @@ import React from "react"
 
 type Props = {}
 
-function objectToText(object) {
+function objectToText(object: any) {
   var output = ""
   for (var property in object) {
     output += property + ": " + object[property] + "\n"
