@@ -59,7 +59,7 @@ export const authOptions: any = {
     }),
   ],
 
-  secret: "ASDKBIOOSSJFNBSOO344KFKIG",
+  secret: process.env.NEXTAUTH_SECRET,
 
   session: {
     strategy: "jwt",
