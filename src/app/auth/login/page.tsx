@@ -35,13 +35,16 @@ export default function LoginPage({
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const result = await signIn("credentials", {
+    await signIn("credentials", {
       email: input.email,
       password: input.password,
-      redirect: true,
-      callbackUrl: "/",
+      redirect: false,
+      callbackUrl: "/workout",
+    }).then(({ url, error }) => {
+      if (url) {
+        router.push(url)
+      } else setResponse(error)
     })
-    console.log(result)
   }
 
   return (

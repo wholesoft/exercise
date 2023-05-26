@@ -41,16 +41,25 @@ export const authOptions: any = {
           }),
         })
 
-        const user = await res.json()
+        try {
+          const user = await res.json()
 
-        console.log({ user })
+          console.log(res.ok)
+          console.log({ user })
 
-        if (res.ok && user) {
-          return user
-        } else return null
+          if (res.ok && user) {
+            return user
+          } else {
+            throw new Error("Invalid Login")
+          }
+        } catch (error) {
+          throw new Error("Invalid Login")
+        }
       },
     }),
   ],
+
+  secret: process.env.NEXT_PUBLIC_SECRET,
 
   session: {
     strategy: "jwt",
