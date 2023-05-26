@@ -16,6 +16,7 @@ export default function EnvPage({}: Props) {
   return (
     <div>
       <h4>Environment Variables</h4>
+      <br />
       <pre>{objectToText(process.env)}</pre>
     </div>
   )
