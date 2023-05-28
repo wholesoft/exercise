@@ -154,10 +154,29 @@
   text-decoration: none;
 }
 
-/* HERO ICONS */
-.hero-icon {
-  width: 20px;
-  height: 20px;
+.rounded-button-container {
+  margin-top: 3px;
+}
+
+.rounded-button {
+  background-color: #abc9fb;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  color: blue;
+  padding: 1px 8px 1px 5px;
+  font-size: 10px;
+  margin-left: 8px;
+}
+
+.rounded-button:hover {
+  cursor: pointer;
+  background-color: blue;
+  color: #ffffff;
+}
+
+.we-menu {
+  display: flex;
 }
 
 /* EASY-EDIT */
@@ -166,4 +185,8 @@
 }
 .easy-edit-wrapper {
   display: inline-block !important;
+}
+
+.clickable:hover {
+  cursor: pointer;
 }

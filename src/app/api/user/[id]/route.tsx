@@ -20,7 +20,7 @@ export async function GET(request: Request, { params: { id } }: Props) {
   if (accessToken) {
     jwtUserId = await getUserId(accessToken)
   }
-  console.log(`GET USER: (${jwtUserId})`)
+  //console.log(`GET USER: (${jwtUserId})`)
   if (jwtUserId === "Invalid JWT" || jwtUserId === "") {
     return NextResponse.json({ message: "INVALID Credentials" }) // 401
   }

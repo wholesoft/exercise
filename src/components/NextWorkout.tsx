@@ -4,7 +4,9 @@ import AddSet from "./AddSet"
 import EditScheduled from "./editfield/EditScheduled"
 import { Exercise, User, WorkoutExercise, WorkoutSets } from "@prisma/client"
 
-import ListSets from "./ListSets"
+import ListSets from "./ListSets2"
+import DeleteWorkoutExercise from "./DeleteWorkoutExercise"
+import ClearSets from "./ClearSets"
 type Props = {
   user: any
 }
@@ -37,31 +39,33 @@ export default function NextWorkout({ user }: Props) {
               <b>Notes:</b>
               <br />
               <p>{row.notes}</p>
+
               <b>Exercises:</b>
               <AddWorkoutExercise workoutId={row.id} user={user} />
+
               {row.workout_exercise.map((we: any) => {
                 return (
-                  <div key={we.id}>
-                    {
-                      exercises.filter(
-                        (e: Exercise) => e.id == we.exercise_id
-                      )[0].name
-                    }
-                    <div className="row" key={we.id}>
-                      <span className="col">
-                        Set #
+                  <div key={we.id} className="py-2">
+                    <div className="d-flex">
+                      {
+                        exercises.filter(
+                          (e: Exercise) => e.id == we.exercise_id
+                        )[0].name
+                      }
+                      <div className="we-menu">
                         <AddSet
                           key={we.id}
                           weId={we.id}
                           setNo={we.workout_set.length + 1}
                         />
-                      </span>
-                      <span className="col">Weight</span>
-                      <span className="col">Reps</span>
+                        {we.workout_set.length > 0 ? (
+                          <ClearSets weId={we.id} />
+                        ) : (
+                          <DeleteWorkoutExercise weId={we.id} />
+                        )}
+                      </div>
                     </div>
                     <ListSets sets={we.workout_set} />
-
-                    <br />
                   </div>
                 )
               })}

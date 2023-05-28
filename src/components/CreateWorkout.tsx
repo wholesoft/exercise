@@ -88,7 +88,7 @@ export default function CreateWorkout({ user }: Props) {
     content = (
       <div>
         <button className="btn btn-primary" onClick={() => setStep(2)}>
-          Add Workout
+          Add New Workout
         </button>
       </div>
     )

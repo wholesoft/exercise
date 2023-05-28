@@ -1,5 +1,4 @@
-import CreateWorkout from "../../components/CreateWorkout"
-import NextWorkout from "../../components/NextWorkout"
+import React from "react"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/next-authOptions"
 
@@ -17,7 +16,9 @@ async function getUser(authUserId: string, atoken: string) {
   return data
 }
 
-export default async function Workout() {
+type Props = {}
+
+export default async function Exercises({}: Props) {
   const session: any = await getServerSession(authOptions)
 
   //console.log(session)
@@ -36,12 +37,12 @@ export default async function Workout() {
   return user !== null ? (
     <div>
       {/*       <p>{JSON.stringify(session)}</p>
-      <p>{JSON.stringify(user)}</p> */}
+        <p>{JSON.stringify(user)}</p> */}
 
       <div style={{ width: "700px", margin: "auto" }}>
-        <NextWorkout user={user} />
-        <hr />
-        <CreateWorkout user={user} />
+        {user.exercises.map((ex: any) => {
+          return <div key={ex.id}>{ex.name}</div>
+        })}
       </div>
     </div>
   ) : (
