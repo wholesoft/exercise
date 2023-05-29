@@ -1,6 +1,8 @@
 import React from "react"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/next-authOptions"
+import Exercise from "../../components/Exercise"
+import AddExercise from "../../components/AddExercise"
 
 async function getUser(authUserId: string, atoken: string) {
   const url = `${process.env.APP_URL}/api/user/${authUserId}`
@@ -41,8 +43,11 @@ export default async function Exercises({}: Props) {
 
       <div style={{ width: "700px", margin: "auto" }}>
         {user.exercises.map((ex: any) => {
-          return <div key={ex.id}>{ex.name}</div>
+          return <Exercise key={ex.id} exercise={ex} />
         })}
+        <div className="py-5">
+          <AddExercise user={user} />
+        </div>
       </div>
     </div>
   ) : (

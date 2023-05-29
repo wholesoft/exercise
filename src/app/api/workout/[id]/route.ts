@@ -19,16 +19,18 @@ export async function GET(request: Request, { params: { id } }: Props) {
 }
 
 export async function PATCH(request: Request, { params: { id } }: Props) {
-  const { scheduled }: any = await request.json()
+  const { scheduled, notes }: any = await request.json()
   const parsedId = parseInt(id.toString())
   let success = false
   /* TODO: Validate fields and user_id */
 
-  console.log(`${id} : ${scheduled}`)
-  console.log(typeof scheduled)
+  console.log(`${id} : ${notes}`)
+  //console.log(typeof scheduled)
 
-  if (!id || typeof scheduled !== "boolean")
+  if (!id || (typeof scheduled !== "boolean" && !notes))
     return NextResponse.json({ message: "Missing required data." })
+
+  console.log("Edit Something")
 
   if (typeof scheduled === "boolean") {
     console.log("UPDATE SCHEDULED!")
@@ -43,6 +45,19 @@ export async function PATCH(request: Request, { params: { id } }: Props) {
     //return NextResponse.json(updatedRecord)
     success = true
   }
+  if (notes != null) {
+    console.log("UPDATE NOTES!")
+    const updatedRecord = await prisma.workout.update({
+      data: {
+        notes: notes,
+      },
+      where: {
+        id: parsedId,
+      },
+    })
+    success = true
+  }
+
   if (success) {
     NextResponse.json({ success: true, message: "Workout Updated" })
   }

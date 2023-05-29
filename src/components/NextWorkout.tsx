@@ -2,6 +2,7 @@ import React from "react"
 import AddWorkoutExercise from "./AddWorkoutExercise"
 import AddSet from "./AddSet"
 import EditScheduled from "./editfield/EditScheduled"
+import EditNotes from "./editfield/EditNotes"
 import { Exercise, User, WorkoutExercise, WorkoutSets } from "@prisma/client"
 
 import ListSets from "./ListSets2"
@@ -38,8 +39,9 @@ export default function NextWorkout({ user }: Props) {
               </p>
               <b>Notes:</b>
               <br />
-              <p>{row.notes}</p>
-
+              <div>
+                <EditNotes woId={row.id} notes={row.notes} />
+              </div>
               <b>Exercises:</b>
               <AddWorkoutExercise workoutId={row.id} user={user} />
 
