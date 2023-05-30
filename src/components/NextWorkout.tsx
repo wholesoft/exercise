@@ -4,7 +4,7 @@ import AddSet from "./AddSet"
 import EditScheduled from "./editfield/EditScheduled"
 import EditNotes from "./editfield/EditNotes"
 import { Exercise, User, WorkoutExercise, WorkoutSets } from "@prisma/client"
-
+import ExerciseMenu from "./ExerciseMenu"
 import ListSets from "./ListSets2"
 import DeleteWorkoutExercise from "./DeleteWorkoutExercise"
 import ClearSets from "./ClearSets"
@@ -48,13 +48,8 @@ export default function NextWorkout({ user }: Props) {
               {row.workout_exercise.map((we: any) => {
                 return (
                   <div key={we.id} className="py-2">
-                    <div className="d-flex">
-                      {
-                        exercises.filter(
-                          (e: Exercise) => e.id == we.exercise_id
-                        )[0].name
-                      }
-                      <div className="we-menu">
+                    <ExerciseMenu key={we.id} we={we} user={user} />
+                    {/*                     <div className="we-menu">
                         <AddSet
                           key={we.id}
                           weId={we.id}
@@ -65,8 +60,8 @@ export default function NextWorkout({ user }: Props) {
                         ) : (
                           <DeleteWorkoutExercise weId={we.id} />
                         )}
-                      </div>
-                    </div>
+                      </div> */}
+
                     <ListSets sets={we.workout_set} />
                   </div>
                 )

@@ -8,14 +8,20 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { we_id, setno, reps, weight }: Partial<WorkoutSets> =
+  const { we_id, setno, reps, sets, weight }: Partial<WorkoutSets> =
     await request.json()
 
-  if (!we_id || !setno || !reps || !weight)
+  if (!we_id || !setno || !reps || !weight || !sets)
     return NextResponse.json({ message: "Missing required data." })
-  const data = { we_id, setno, reps, weight }
 
-  const newRecord = await prisma.workoutSets.create({ data })
+  // loop through sets and increment setno
+  let n = 0
+  let newRecord = { message: "No Sets to Add" }
+  while (n < sets) {
+    let data = { we_id, setno: setno + n, reps, weight }
+    let newRecord = await prisma.workoutSets.create({ data })
+    n += 1
+  }
   return NextResponse.json(newRecord)
 }
 

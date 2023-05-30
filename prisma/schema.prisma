@@ -24,7 +24,8 @@ model User {
 model Exercise {
   id                Int       @id @default(autoincrement())
   user_id           Int
-  name              String?   @unique @db.VarChar(255)
+  name              String?   @db.VarChar(255)
+  inactive          Boolean?  @default(false)
   created           DateTime? @default(now()) @db.DateTime(0)
   updated           DateTime? @updatedAt @default(now()) @db.DateTime(0)
   user              User @relation(fields: [user_id], references: [id])
