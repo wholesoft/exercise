@@ -8,7 +8,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { we_id, setno, reps, sets, weight }: Partial<WorkoutSets> =
+  const { we_id, setno, reps, sets, weight }: Partial<WorkoutSets> | any =
     await request.json()
 
   if (!we_id || !setno || !reps || !weight || !sets)
