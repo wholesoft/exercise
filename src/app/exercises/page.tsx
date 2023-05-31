@@ -6,15 +6,15 @@ import AddExercise from "../../components/AddExercise"
 
 async function getUser(authUserId: string, atoken: string) {
   const url = `${process.env.APP_URL}/api/user/${authUserId}`
-  //console.log(url)
+  console.log(url)
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${atoken}` },
     cache: "no-store",
   })
 
   const data = await res.json()
-  //console.log("fetch results")
-  //console.log(data)
+  console.log("fetch results")
+  console.log(data)
   return data
 }
 
@@ -39,17 +39,18 @@ export default async function Exercises({}: Props) {
   return user !== null ? (
     <div>
       {/*       <p>{JSON.stringify(session)}</p>
-        <p>{JSON.stringify(user)}</p> */}
+      <p>{JSON.stringify(user.exercises)}</p>*/}
 
       <div style={{ width: "700px", margin: "auto" }}>
         {user.exercises
           .filter((ex2: any) => ex2.inactive == false)
           .map((ex: any) => {
-            return
-            {
-              /* @ts-expect-error Server Component */
-              ;<ShowExercise key={ex.id} exercise={ex} />
-            }
+            return (
+              <>
+                {/* @ts-expect-error Server Component */}
+                <ShowExercise key={ex.id} exercise={ex} />
+              </>
+            )
           })}
         <div className="py-5">
           <AddExercise user={user} />
