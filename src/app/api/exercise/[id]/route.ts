@@ -19,15 +19,17 @@ export async function GET(request: Request, { params: { id } }: Props) {
 }
 
 export async function PATCH(request: Request, { params: { id } }: Props) {
-  const { name }: any = await request.json()
+  const { name, inactive }: any = await request.json()
   const parsedId = parseInt(id.toString())
   let success = false
   /* TODO: Validate fields and user_id */
 
   console.log("OUTPUT JSON")
   console.log(`Name: ${name}`)
+  console.log(`Inactive: ${inactive}`)
+  console.log(typeof inactive)
 
-  if (!id || !name)
+  if (!id || (!name && typeof inactive !== "boolean"))
     return NextResponse.json({ message: "Missing required data." })
 
   if (name != null) {
@@ -43,21 +45,22 @@ export async function PATCH(request: Request, { params: { id } }: Props) {
     //return NextResponse.json(updatedRecord)
     success = true
   }
-  /*   if (reps !== null) {
-    console.log("UPDATE REPS!")
-    const updatedRecord = await prisma.workoutSets.update({
+  if (typeof inactive === "boolean") {
+    console.log("UPDATE INACTIVE!")
+    const updatedRecord = await prisma.exercise.update({
       data: {
-        reps: reps,
+        inactive: inactive,
       },
       where: {
         id: parsedId,
       },
     })
+    console.log(updatedRecord)
     success = true
-  } */
+  }
 
   if (success) {
-    NextResponse.json({ success: true, message: "Exercise Updated" })
+    return NextResponse.json({ success: true, message: "Exercise Updated" })
   }
 
   return NextResponse.json({ success: false, message: "Error Patching Set" })

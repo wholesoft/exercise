@@ -1,7 +1,7 @@
 import React from "react"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/next-authOptions"
-import Exercise from "../../components/Exercise"
+import ShowExercise from "../../components/Exercise"
 import AddExercise from "../../components/AddExercise"
 
 async function getUser(authUserId: string, atoken: string) {
@@ -25,7 +25,7 @@ export default async function Exercises({}: Props) {
 
   //console.log(session)
 
-  let user = null
+  let user: any = null
   if (session != null) {
     if (session.user != null) {
       const authUserId = session.user.authUserId
@@ -42,9 +42,15 @@ export default async function Exercises({}: Props) {
         <p>{JSON.stringify(user)}</p> */}
 
       <div style={{ width: "700px", margin: "auto" }}>
-        {user.exercises.map((ex: any) => {
-          return <Exercise key={ex.id} exercise={ex} />
-        })}
+        {user.exercises
+          .filter((ex2: any) => ex2.inactive == false)
+          .map((ex: any) => {
+            return
+            {
+              /* @ts-expect-error Server Component */
+              ;<ShowExercise key={ex.id} exercise={ex} />
+            }
+          })}
         <div className="py-5">
           <AddExercise user={user} />
         </div>

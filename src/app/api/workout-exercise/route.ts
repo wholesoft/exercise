@@ -1,9 +1,27 @@
-import { NextResponse } from "next/server"
+import { NextResponse, NextRequest } from "next/server"
 import { User, Workout, WorkoutExercise } from "@prisma/client"
 import prisma from "@/lib/prisma"
 
-export async function GET(request: Request) {
-  const results = await prisma.workoutExercise.findMany()
+function getQueryStringParams(url: string) {
+  let result: any = {}
+  if (url.indexOf("?") > 0) {
+    let paramString = url.slice(url.indexOf("?") + 1)
+    let paramArray = paramString.split("&")
+    for (let item of paramArray) {
+      let keyvalue = item.split("=")
+      result[keyvalue[0]] = keyvalue[1]
+    }
+  }
+  return result
+}
+export async function GET(request: NextRequest) {
+  let result: any = ""
+  const { url } = request
+  const params = getQueryStringParams(url)
+  const { exerciseId } = params
+  const results = await prisma.workoutExercise.findMany({
+    where: { exercise_id: parseInt(exerciseId.toString()) },
+  })
   return new NextResponse(JSON.stringify(results))
 }
 

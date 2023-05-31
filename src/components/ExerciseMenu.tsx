@@ -13,7 +13,7 @@ export default function ExerciseMenu({ we, user }: Props) {
   return (
     <>
       <div className="d-flex">
-        {user.exercises.filter((e: Exercise) => e.id == we.exercise_id)[0].name}
+        {user.exercises.filter((e: any) => e.id == we.exercise_id)[0].name}
         <div className="we-menu">
           {we.workout_set.length > 0 ? (
             <ClearSets weId={we.id} />
