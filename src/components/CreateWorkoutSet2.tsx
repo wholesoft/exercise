@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation"
 type Props = {
   weId: number
   setNo: number
-  setStep: any
+  setAddingSet: any
 }
 
-export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
+export default function CreateWorkoutSet({ weId, setNo, setAddingSet }: Props) {
   const [data, setData] = useState({ weId, setNo, sets: 0, reps: 0, weight: 0 })
   const router = useRouter()
 
@@ -41,7 +41,7 @@ export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
       ...prevData,
       setNo: prevData.setNo + 1,
     }))
-    setStep(1)
+    setAddingSet(false)
     router.refresh()
   }
 
@@ -52,7 +52,7 @@ export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
 
     setData((prevData) => ({
       ...prevData,
-      [name]: parseInt(e.target.value),
+      [name]: parseInt(e.target.value) || 0,
     }))
   }
 
@@ -91,7 +91,6 @@ export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
               placeholder=""
               value={data.sets}
               onChange={handleChange}
-              autoFocus
             />
           </div>
 
@@ -108,11 +107,16 @@ export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
               placeholder=""
               value={data.reps}
               onChange={handleChange}
-              autoFocus
             />
           </div>
           <div className="col d-flex align-items-end">
             <button className="btn btn-primary">Save</button>
+            <button
+              className="btn btn-secondary ms-2"
+              onClick={() => setAddingSet(false)}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </div>
