@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
   return new NextResponse(JSON.stringify(result))
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const { user_id, timestamp, notes, scheduled }: Partial<Workout> =
     await request.json()
 
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
   return NextResponse.json(newRecord)
 }
 
-export async function DELETE(request: Request) {
+export async function DELETE(request: NextRequest) {
   const { id }: Partial<Workout> = await request.json()
 
   console.log(`DELETE WORKOUT ${id}`)
@@ -65,24 +65,47 @@ export async function DELETE(request: Request) {
   return NextResponse.json({ message: `User ${id} deleted` })
 }
 
-export async function PUT(request: Request) {
-  const { id, timestamp, notes, scheduled }: Workout = await request.json()
+export async function PUT(request: NextRequest | any) {
+  console.log("PUT: WORKOUT")
+  const { id, timestamp, notes, scheduled }: Partial<Workout> | any =
+    await request.json()
 
   console.log(request.json())
 
   if (!id || !timestamp || !notes || scheduled === null)
     return NextResponse.json({ message: "Missing required data." })
 
-  const updatedRecord = await prisma.workout.update({
-    data: {
-      timestamp: timestamp,
-      notes: notes,
-      scheduled: scheduled,
-    },
-    where: {
-      id: id,
-    },
-  })
+  console.log(typeof id)
+  console.log(typeof new Date(timestamp))
+  console.log(typeof notes)
+  console.log(typeof scheduled)
 
-  return NextResponse.json(updatedRecord)
+  try {
+    await prisma.workout.update({
+      data: {
+        timestamp: new Date(timestamp),
+        notes: notes,
+        scheduled: scheduled,
+      },
+      where: {
+        id: id,
+      },
+    })
+  } catch (e: any) {
+    /*   if (e instanceof Prisma.PrismaClientKnownRequestError) {
+    if (e.code === 'P2002') {
+      console.log(
+        'There is a unique constraint violation, a new user cannot be created with this email'
+      )
+    }
+  }
+  throw e */
+    return NextResponse.json({ message: "WTF" })
+    console.log("Error trapped")
+    console.log(e?.code)
+    console.log(e)
+  }
+
+  console.log("HMMMMMM")
+  return NextResponse.json({ message: "PUT REQUEST COMPLETE" })
 }

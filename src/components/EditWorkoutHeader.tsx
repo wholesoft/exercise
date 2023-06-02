@@ -30,11 +30,14 @@ export default function EditWorkoutHeader({ user, w, editMode }: Props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...data,
+        id,
+        notes,
         timestamp: new Date(timestamp),
         scheduled: parseBool(scheduled),
       }),
     })
+
+    console.log("BACK")
     console.log(res)
 
     /*     setData((prevData: any) => ({
