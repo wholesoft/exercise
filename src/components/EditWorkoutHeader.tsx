@@ -24,21 +24,28 @@ export default function EditWorkoutHeader({ user, w, editMode }: Props) {
     const { timestamp, notes, scheduled, id } = data
 
     // Send data to API route
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/workout/`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id,
-        notes,
-        timestamp: new Date(timestamp),
-        scheduled: parseBool(scheduled),
-      }),
-    })
-
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/workout/`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+            notes,
+            timestamp: new Date(timestamp),
+            scheduled: parseBool(scheduled),
+          }),
+        }
+      )
+      //console.log(res)
+    } catch (e) {
+      console.log("Error.")
+    }
     console.log("BACK")
-    console.log(res)
+    //console.log(res)
 
     /*     setData((prevData: any) => ({
       ...prevData,

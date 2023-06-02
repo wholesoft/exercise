@@ -70,11 +70,15 @@ export async function PUT(request: NextRequest | any) {
   const { id, timestamp, notes, scheduled }: Partial<Workout> | any =
     await request.json()
 
-  console.log(request.json())
+  //console.log(request.json())
 
   if (!id || !timestamp || !notes || scheduled === null)
     return NextResponse.json({ message: "Missing required data." })
 
+  console.log(id)
+  console.log(timestamp)
+  console.log(notes)
+  console.log(scheduled)
   console.log(typeof id)
   console.log(typeof new Date(timestamp))
   console.log(typeof notes)
