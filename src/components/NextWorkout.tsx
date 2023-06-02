@@ -1,76 +1,39 @@
-import React from "react"
-import AddWorkoutExercise from "./AddWorkoutExercise"
-import AddSet from "./AddSet"
-import EditScheduled from "./editfield/EditScheduled"
-import EditNotes from "./editfield/EditNotes"
-import { Exercise, User, WorkoutExercise, WorkoutSets } from "@prisma/client"
-import ExerciseMenu from "./ExerciseMenu"
-import ListSets from "./ListSets2"
-import DeleteWorkoutExercise from "./DeleteWorkoutExercise"
-import ClearSets from "./ClearSets"
+"use client"
+import React, { useState } from "react"
+import DisplayWorkout from "./DisplayWorkout"
+
 type Props = {
   user: any
 }
 
 export default function NextWorkout({ user }: Props) {
-  //const data = await getWorkouts()
+  const [editMode, setEditMode] = useState(false)
 
-  let result = <div>Loading...</div>
-
-  if (user) {
-    const workouts = user?.workouts?.filter((w: any) => w.scheduled === true)
-    const exercises = user?.exercises
-
-    result = (
-      <>
-        {workouts?.map((row: any) => {
-          let workoutDate = new Date(row.timestamp)
-          workoutDate = new Date(
-            workoutDate.getTime() + user.timezone * 60 * 1000
-          )
-
-          return (
-            <div key={row.id}>
-              <p>
-                <span>{workoutDate.toString().slice(0, 15)} </span>
-                <span>
-                  <EditScheduled woId={row.id} scheduled={row.scheduled} />
-                </span>
-              </p>
-              <b>Notes:</b>
-              <br />
-              <div>
-                <EditNotes woId={row.id} notes={row.notes} />
-              </div>
-              <b>Exercises:</b>
-              <AddWorkoutExercise workoutId={row.id} user={user} />
-
-              {row.workout_exercise.map((we: any) => {
-                return (
-                  <div key={we.id} className="py-2">
-                    <ExerciseMenu key={we.id} we={we} user={user} />
-                    {/*                     <div className="we-menu">
-                        <AddSet
-                          key={we.id}
-                          weId={we.id}
-                          setNo={we.workout_set.length + 1}
-                        />
-                        {we.workout_set.length > 0 ? (
-                          <ClearSets weId={we.id} />
-                        ) : (
-                          <DeleteWorkoutExercise weId={we.id} />
-                        )}
-                      </div> */}
-
-                    <ListSets sets={we.workout_set} />
-                  </div>
-                )
-              })}
-            </div>
-          )
-        })}
-      </>
-    )
+  const toggleEditMode = () => {
+    if (editMode) {
+      setEditMode(false)
+    } else {
+      setEditMode(true)
+    }
   }
+
+  const workouts = user?.workouts?.filter((w: any) => w.scheduled === true)
+  const exercises = user?.exercises
+
+  const result = (
+    <>
+      <button className="btn btn-secondary" onClick={toggleEditMode}>
+        Toggle Edit Mode
+      </button>
+      <br />
+      <br />
+      {workouts?.map((w: any) => {
+        return (
+          <DisplayWorkout key={w.id} w={w} user={user} editMode={editMode} />
+        )
+      })}
+    </>
+  )
+
   return result
 }

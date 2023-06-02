@@ -1,55 +1,45 @@
 import React from "react"
 import AddWorkoutExercise from "./AddWorkoutExercise"
-import AddSet from "./AddSet"
-import EditScheduled from "./editfield/EditScheduled"
-import EditNotes from "./editfield/EditNotes"
-import { Exercise, User, WorkoutExercise, WorkoutSets } from "@prisma/client"
 import ExerciseMenu from "./ExerciseMenu"
 import ListSets from "./ListSets2"
-import DeleteWorkoutExercise from "./DeleteWorkoutExercise"
-import ClearSets from "./ClearSets"
+import EditWorkoutHeader from "./EditWorkoutHeader"
+
 type Props = {
   user: any
   w: any
+  editMode: boolean
 }
 
-export default function DisplayWorkout({ user, w }: Props) {
-  let result = <div>Loading...</div>
-
-  if (user) {
-    const exercises = user?.exercises
-    let workoutDate = new Date(w.timestamp)
-    workoutDate = new Date(workoutDate.getTime() + user.timezone * 60 * 1000)
-
-    result = (
-      <>
-        <div>
-          <p>
-            <span>{workoutDate.toString().slice(0, 15)} </span>
-            <span>
-              <EditScheduled woId={w.id} scheduled={w.scheduled} />
-            </span>
-          </p>
-          <b>Notes:</b>
-          <br />
-          <div>
-            <EditNotes woId={w.id} notes={w.notes} />
-          </div>
-          <b>Exercises:</b>
-          <AddWorkoutExercise workoutId={w.id} user={user} />
+export default function DisplayWorkout({ user, w, editMode }: Props) {
+  const result = (
+    <>
+      <div className="workout row">
+        <div className="col">
+          <EditWorkoutHeader user={user} w={w} editMode={editMode} />
+        </div>
+        <div className="col">
+          {editMode === true ? (
+            <AddWorkoutExercise workoutId={w.id} user={user} />
+          ) : null}
 
           {w.workout_exercise.map((we: any) => {
             return (
               <div key={we.id} className="py-2">
-                <ExerciseMenu key={we.id} we={we} user={user} />
+                <ExerciseMenu
+                  key={we.id}
+                  we={we}
+                  user={user}
+                  editMode={editMode}
+                />
 
                 <ListSets sets={we.workout_set} />
               </div>
             )
           })}
         </div>
-      </>
-    )
-  }
+      </div>
+    </>
+  )
+
   return result
 }

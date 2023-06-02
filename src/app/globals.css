@@ -179,14 +179,37 @@
   display: flex;
 }
 
-/* EASY-EDIT */
-.easy-edit-button {
-  display: none !important;
+.workout {
+  font-size: 14px;
 }
+
+.workout h4 {
+  color: var(--blue-600);
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+}
+
+.workout h3 {
+  color: var(--blue-800);
+  font-weight: bold;
+  font-size: 14px;
+  padding: 0;
+  margin: 6px 0 0 0;
+}
+
+/* EASY-EDIT */
+/* .easy-edit-button {
+  display: none !important;
+} */
 .easy-edit-wrapper {
   display: inline-block !important;
 }
 
 .clickable:hover {
   cursor: pointer;
+}
+
+textarea {
+  resize: both;
 }

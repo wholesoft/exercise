@@ -6,9 +6,10 @@ import EasyEdit from "react-easy-edit"
 type Props = {
   woId: number
   scheduled: boolean
+  editMode: boolean
 }
 
-export default function EditScheduled({ woId, scheduled }: Props) {
+export default function EditScheduled({ woId, scheduled, editMode }: Props) {
   const save = async (value: string) => {
     // Send data to API route
     let parsedValue = value === "true"
@@ -28,26 +29,19 @@ export default function EditScheduled({ woId, scheduled }: Props) {
     console.log("Cancelled")
   }
 
-  return (
+  return editMode ? (
     <select
       name="scheduled"
       id="scheduled"
       onChange={(e) => save(e.target.value)}
+      value={scheduled?.toString()}
     >
       <option value="true">Scheduled</option>
       <option value="false">Completed</option>
     </select>
-
-    /*     <EasyEdit
-      type="select"
-      options={[
-        { label: "Scheduled", value: true },
-        { label: "Completed", value: false },
-      ]}
-      onSave={save}
-      placeholder=""
-      instructions=""
-      value={scheduled}
-    /> */
+  ) : scheduled ? (
+    <em>Scheduled</em>
+  ) : (
+    <em>Completed</em>
   )
 }
