@@ -15,7 +15,7 @@ const NavMenu = () => {
     // LOGGED IN USER
     if (session.user.roles.includes(1001)) {
       items = [
-        { id: 4, link: "/workout", label: "My Workouts" },
+        { id: 4, link: "/workouts", label: "My Workouts" },
         { id: 5, link: "/exercises", label: "My Exercises" },
         { id: 6, link: "/auth/account", label: "My Account" },
       ]

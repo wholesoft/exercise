@@ -39,7 +39,7 @@ export default function LoginPage({
       email: input.email,
       password: input.password,
       redirect: false,
-      callbackUrl: "/workout",
+      callbackUrl: "/workouts",
     }).then(({ url, error }: any) => {
       if (url) {
         router.push(url)

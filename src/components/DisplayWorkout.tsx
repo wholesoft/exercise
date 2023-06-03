@@ -11,7 +11,9 @@ type Props = {
 }
 
 export default function DisplayWorkout({ user, w, editMode }: Props) {
-  const result = (
+  //console.log(w)
+
+  const result = w ? (
     <div className="container">
       <div className="workout row">
         <div className="col">
@@ -39,6 +41,8 @@ export default function DisplayWorkout({ user, w, editMode }: Props) {
         </div>
       </div>
     </div>
+  ) : (
+    <div>Loading...</div>
   )
 
   return result

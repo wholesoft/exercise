@@ -8,6 +8,7 @@ type Props = {
 
 export default function ListWorkouts({ user }: Props) {
   const [editMode, setEditMode] = useState(false)
+  const [displayIndex, setDisplayIndex] = useState(0)
 
   const toggleEditMode = () => {
     if (editMode) {
@@ -17,27 +18,67 @@ export default function ListWorkouts({ user }: Props) {
     }
   }
 
+  const nextWorkout = () => {
+    if (displayIndex < w.length - 1) {
+      setDisplayIndex(displayIndex + 1)
+    } else {
+      setDisplayIndex(0)
+    }
+  }
+
+  const prevWorkout = () => {
+    if (displayIndex > 0) {
+      setDisplayIndex(displayIndex - 1)
+    } else {
+      setDisplayIndex(w.length - 1)
+    }
+  }
+
   const w = user.workouts
   w.sort((a: any, b: any) => {
     return new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf() // descending
   })
+
+  if (displayIndex === null && w.length > 0) {
+    setDisplayIndex(0)
+  }
+
+  /*   const idArray = w.map((w: any) => {
+    return w.id
+  })
+  let currentWorkoutId = idArray[0]
+  if (displayId > 0) {
+    currentWorkoutId = displayId
+  } */
+  //console.log(idArray)
+  let currentWorkout = w[displayIndex]
+
   return (
     <div>
-      <button className="btn btn-secondary" onClick={toggleEditMode}>
-        Toggle Edit Mode
-      </button>
+      {editMode ? (
+        <i className="bi bi-pencil-fill" onClick={toggleEditMode}></i>
+      ) : (
+        <i className="bi bi-pencil" onClick={toggleEditMode}></i>
+      )}
+
+      <i className="bi bi-caret-left" onClick={prevWorkout}></i>
+      <i className="bi bi-caret-right" onClick={nextWorkout}></i>
+
+      <p>{displayIndex}</p>
       <br />
       <br />
-      {w.map((w: any) => {
+      {/*       <p>{currentWorkoutId}</p>
+      <div>{JSON.stringify(currentWorkout)}</div> */}
+      <DisplayWorkout w={currentWorkout} user={user} editMode={editMode} />
+      {/*       {w.map((w: any) => {
         return (
           <div key={w.id}>
-            {/*  {w.id} - {w.timestamp.toString().slice(0, 10)} */}
             <DisplayWorkout w={w} user={user} editMode={editMode} />
             <hr />
             <br />
           </div>
         )
-      })}
+      })} */}
     </div>
   )
 }

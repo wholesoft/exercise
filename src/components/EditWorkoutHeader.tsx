@@ -72,7 +72,7 @@ export default function EditWorkoutHeader({ user, w, editMode }: Props) {
     <div>
       <div className="row">
         <div className="col-auto">
-          <h3>Workout</h3>
+          {/* <h3>Workout</h3> */}
           <input
             className="form-control"
             type="date"
@@ -83,7 +83,7 @@ export default function EditWorkoutHeader({ user, w, editMode }: Props) {
           />
         </div>
         <div className="col-auto">
-          <h3>&nbsp;</h3>
+          {/* <h3>&nbsp;</h3> */}
           <select
             className="form-select"
             name="scheduled"
@@ -97,14 +97,14 @@ export default function EditWorkoutHeader({ user, w, editMode }: Props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-auto">
+        <div className="col">
           <h4 style={{ marginTop: "6px" }}>Notes</h4>
           <textarea
-            className="form-control"
-            style={{ width: "400px", height: "225px" }}
+            className="form-control h-75"
+            rows={7}
             id="notes"
             name="notes"
-            placeholder="notes"
+            placeholder=""
             value={data.notes}
             onChange={handleChange}
           />
@@ -120,7 +120,7 @@ export default function EditWorkoutHeader({ user, w, editMode }: Props) {
     </div>
   ) : (
     <div>
-      <h3>Workout</h3>
+      {/* <h3>Workout</h3> */}
       <span>{workoutDate.toString().slice(0, 15)}</span>
       <span className="ms-2 me-2">&mdash;</span>
       {w.scheduled ? <em>Scheduled</em> : <em>Completed</em>}
