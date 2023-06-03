@@ -14,7 +14,7 @@ export default function DisplayWorkout({ user, w, editMode }: Props) {
   //console.log(w)
 
   const result = w ? (
-    <div className="container">
+    <div className="containerd">
       <div className="workout row">
         <div className="col">
           <EditWorkoutHeader user={user} w={w} editMode={editMode} />

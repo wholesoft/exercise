@@ -34,12 +34,7 @@ export default async function Workout() {
 
   return user !== null ? (
     <div>
-      {/*       <p>{JSON.stringify(session)}</p>
-      <p>{JSON.stringify(user)}</p> */}
-
-      <div style={{ width: "700px", margin: "auto" }}>
-        <ListWorkouts user={user} />
-      </div>
+      <ListWorkouts user={user} />
     </div>
   ) : (
     <div>Loading...</div>

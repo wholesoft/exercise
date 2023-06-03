@@ -38,23 +38,18 @@ export default async function Exercises({}: Props) {
 
   return user !== null ? (
     <div>
-      {/*       <p>{JSON.stringify(session)}</p>
-      <p>{JSON.stringify(user.exercises)}</p>*/}
-
-      <div style={{ width: "700px", margin: "auto" }}>
-        {user.exercises
-          .filter((ex2: any) => ex2.inactive == false)
-          .map((ex: any) => {
-            return (
-              <>
-                {/* @ts-expect-error Server Component */}
-                <ShowExercise key={ex.id} exercise={ex} />
-              </>
-            )
-          })}
-        <div className="py-5">
-          <AddExercise user={user} />
-        </div>
+      {user.exercises
+        .filter((ex2: any) => ex2.inactive == false)
+        .map((ex: any) => {
+          return (
+            <>
+              {/* @ts-expect-error Server Component */}
+              <ShowExercise key={ex.id} exercise={ex} />
+            </>
+          )
+        })}
+      <div className="py-5">
+        <AddExercise user={user} />
       </div>
     </div>
   ) : (
