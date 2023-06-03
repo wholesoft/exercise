@@ -12,7 +12,7 @@ type Props = {
 
 export default function DisplayWorkout({ user, w, editMode }: Props) {
   const result = (
-    <>
+    <div className="container">
       <div className="workout row">
         <div className="col">
           <EditWorkoutHeader user={user} w={w} editMode={editMode} />
@@ -38,7 +38,7 @@ export default function DisplayWorkout({ user, w, editMode }: Props) {
           })}
         </div>
       </div>
-    </>
+    </div>
   )
 
   return result
