@@ -70,8 +70,8 @@ export default function EditWorkoutHeader({ user, w, editMode }: Props) {
   }
 
   let workoutDate = new Date(w.timestamp)
-  workoutDate = new Date(workoutDate.getTime() + user.timezone * 60 * 1000)
-  //workoutDate = new Date(workoutDate.getTime())
+  var offset = workoutDate.getTimezoneOffset()
+  workoutDate.setTime(workoutDate.getTime() + offset * 60 * 1000)
 
   return editMode ? (
     <div>

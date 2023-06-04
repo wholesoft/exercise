@@ -70,21 +70,15 @@ export default function ListWorkouts({ user }: Props) {
   let workoutDate = new Date(currentWorkout.timestamp)
   var offset = workoutDate.getTimezoneOffset()
   workoutDate.setTime(workoutDate.getTime() + offset * 60 * 1000)
-  //workoutDate = new Date(workoutDate.getTime() + user.timezone * 60 * 1000)
 
   return (
     <div>
-      <div className="fs-3">
+      <div className="fs-3" style={{ textAlign: "center" }}>
         <i className="bi bi-caret-left" onClick={prevWorkout}></i>
-        <span className="fs-6">{workoutDate.toString()}</span>
-        <br />
-        <span className="fs-6">{user.timezone}</span>
-        <br />
-        <span>{offset}</span>
-        <br />
-        <span>{currentWorkout.timestamp}</span>
-        <i className="bi bi-caret-right" onClick={nextWorkout}></i>
+        <span className="fs-6">{workoutDate.toString().slice(0, 15)}</span>
 
+        <i className="bi bi-caret-right" onClick={nextWorkout}></i>
+        <br />
         {editMode ? (
           <i className="bi bi-pencil-fill" onClick={toggleEditMode}></i>
         ) : (
@@ -92,7 +86,7 @@ export default function ListWorkouts({ user }: Props) {
         )}
 
         <i
-          className="bi bi-trash3"
+          className="bi bi-trash3 ms-3"
           onClick={() => deleteWorkout(currentWorkout.id)}
         ></i>
       </div>
