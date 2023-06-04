@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     await request.json()
 
   console.log("Add Workout")
-  if (!user_id || !timestamp || !notes || scheduled === null)
+  if (!user_id || !timestamp || scheduled === null)
     return NextResponse.json({ message: "Missing required data." })
   const data = { user_id, timestamp, notes, scheduled }
   console.log(data)

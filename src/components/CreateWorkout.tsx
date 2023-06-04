@@ -86,11 +86,11 @@ export default function CreateWorkout({ user }: Props) {
 
   if (step === 1) {
     content = (
-      <div>
+      <div className="d-flex align-items-center">
         <i className="bi bi-plus-circle fs-3" onClick={() => setStep(2)}></i>
-        {/*         <button className="btn btn-primary" onClick={() => setStep(2)}>
-          Add New Workout
-        </button> */}
+        <span className="bi-label fs-5 ps-2" onClick={() => setStep(2)}>
+          Add Workout
+        </span>
       </div>
     )
   }

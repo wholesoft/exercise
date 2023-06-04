@@ -213,3 +213,14 @@
 textarea {
   resize: both;
 }
+
+.bi {
+  color: var(--blue-600);
+}
+
+.bi-label {
+  color: var(--blue-600);
+}
+.bi-label:hover {
+  cursor: pointer;
+}
