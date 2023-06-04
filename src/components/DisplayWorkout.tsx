@@ -17,6 +17,7 @@ export default function DisplayWorkout({ user, w, editMode }: Props) {
     <div className="containerd">
       <div className="workout row">
         <div className="col">
+          {w.id}
           <EditWorkoutHeader user={user} w={w} editMode={editMode} />
         </div>
         <div className="col">

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, FormEvent, ChangeEvent } from "react"
+import { useState, FormEvent, ChangeEvent, useEffect } from "react"
 import { useRouter } from "next/navigation"
 
 type Props = {
@@ -17,6 +17,10 @@ export default function EditWorkoutHeader({ user, w, editMode }: Props) {
   const { id, timestamp, scheduled, notes } = w
   const [data, setData] = useState({ id, timestamp, scheduled, notes })
   const router = useRouter()
+
+  useEffect(() => {
+    setData({ id, timestamp, scheduled, notes })
+  }, [w])
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement> | any) => {
     e.preventDefault()
@@ -51,7 +55,7 @@ export default function EditWorkoutHeader({ user, w, editMode }: Props) {
       ...prevData,
       notes: "",
     })) */
-    //router.refresh()
+    router.refresh()
   }
 
   const handleChange = (
@@ -67,6 +71,7 @@ export default function EditWorkoutHeader({ user, w, editMode }: Props) {
 
   let workoutDate = new Date(w.timestamp)
   workoutDate = new Date(workoutDate.getTime() + user.timezone * 60 * 1000)
+  //workoutDate = new Date(workoutDate.getTime())
 
   return editMode ? (
     <div>

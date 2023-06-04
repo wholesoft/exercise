@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import DisplayWorkout from "./DisplayWorkout"
+import CreateWorkout from "./CreateWorkout"
 import { useRouter } from "next/navigation"
 
 type Props = {
@@ -66,10 +67,15 @@ export default function ListWorkouts({ user }: Props) {
 
   let currentWorkout = w[displayIndex]
 
+  let workoutDate = new Date(currentWorkout.timestamp)
+  workoutDate = new Date(workoutDate.getTime() + user.timezone * 60 * 1000)
+
   return (
     <div>
       <div className="fs-3">
         <i className="bi bi-caret-left" onClick={prevWorkout}></i>
+        <span className="fs-6">{workoutDate.toString()}</span>
+        <span className="fs-6">{user.timezone}</span>
         <i className="bi bi-caret-right" onClick={nextWorkout}></i>
 
         {editMode ? (
@@ -78,25 +84,14 @@ export default function ListWorkouts({ user }: Props) {
           <i className="bi bi-pencil" onClick={toggleEditMode}></i>
         )}
 
-        <i className="bi bi-plus-circle" onClick={nextWorkout}></i>
         <i
           className="bi bi-trash3"
           onClick={() => deleteWorkout(currentWorkout.id)}
         ></i>
       </div>
+      <CreateWorkout user={user} />
       <br />
-      {/*       <p>{currentWorkoutId}</p>
-      <div>{JSON.stringify(currentWorkout)}</div> */}
       <DisplayWorkout w={currentWorkout} user={user} editMode={editMode} />
-      {/*       {w.map((w: any) => {
-        return (
-          <div key={w.id}>
-            <DisplayWorkout w={w} user={user} editMode={editMode} />
-            <hr />
-            <br />
-          </div>
-        )
-      })} */}
     </div>
   )
 }

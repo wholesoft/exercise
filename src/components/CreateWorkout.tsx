@@ -87,9 +87,10 @@ export default function CreateWorkout({ user }: Props) {
   if (step === 1) {
     content = (
       <div>
-        <button className="btn btn-primary" onClick={() => setStep(2)}>
+        <i className="bi bi-plus-circle fs-3" onClick={() => setStep(2)}></i>
+        {/*         <button className="btn btn-primary" onClick={() => setStep(2)}>
           Add New Workout
-        </button>
+        </button> */}
       </div>
     )
   }
