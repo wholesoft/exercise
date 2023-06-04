@@ -6,17 +6,17 @@ import { useRouter } from "next/navigation"
 type Props = {
   weId: number
   setNo: number
-  setStep: any
+  setAddingSet: any
 }
 
-export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
-  const [data, setData] = useState({ weId, setNo, weight: 0, reps: 0 })
+export default function CreateWorkoutSet({ weId, setNo, setAddingSet }: Props) {
+  const [data, setData] = useState({ weId, setNo, sets: 0, reps: 0, weight: 0 })
   const router = useRouter()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(JSON.stringify(data))
-    const { weId, setNo, reps, weight } = data
+    const { weId, setNo, sets, reps, weight } = data
 
     // Send data to API route
     const res = await fetch(
@@ -26,7 +26,13 @@ export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ we_id: weId, setno: setNo, reps, weight }),
+        body: JSON.stringify({
+          we_id: weId,
+          setno: setNo,
+          sets,
+          reps,
+          weight,
+        }),
       }
     )
     console.log(res)
@@ -35,7 +41,7 @@ export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
       ...prevData,
       setNo: prevData.setNo + 1,
     }))
-    setStep(1)
+    setAddingSet(false)
     router.refresh()
   }
 
@@ -46,7 +52,7 @@ export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
 
     setData((prevData) => ({
       ...prevData,
-      [name]: parseInt(e.target.value),
+      [name]: parseInt(e.target.value) || 0,
     }))
   }
 
@@ -54,61 +60,66 @@ export default function CreateWorkoutSet({ weId, setNo, setStep }: Props) {
 
   const content = (
     <form onSubmit={handleSubmit}>
-      {/* <div className="container"> */}
-      <div className="row">
-        <div className="col">
-          <label htmlFor="setNo" className="form-label">
-            Set #
-          </label>
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <label htmlFor="weight" className="form-label">
+              Weight
+            </label>
 
-          <input
-            className="form-control"
-            type="text"
-            id="setNo"
-            name="setNo"
-            placeholder="Set"
-            value={`${data.setNo}`}
-            onChange={handleChange}
-            autoFocus
-          />
-        </div>
-        <div className="col">
-          <label htmlFor="weight" className="form-label">
-            Weight
-          </label>
+            <input
+              className="form-control"
+              type="text"
+              id="weight"
+              name="weight"
+              placeholder="Weight"
+              value={`${data.weight}`}
+              onChange={handleChange}
+              autoFocus
+            />
+          </div>
+          <div className="col">
+            <label htmlFor="sets" className="form-label">
+              Sets
+            </label>
 
-          <input
-            className="form-control"
-            type="text"
-            id="weight"
-            name="weight"
-            placeholder="Weight"
-            value={`${data.weight}`}
-            onChange={handleChange}
-            autoFocus
-          />
-        </div>
-        <div className="col">
-          <label htmlFor="reps" className="form-label">
-            Reps
-          </label>
+            <input
+              className="form-control"
+              type="text"
+              id="sets"
+              name="sets"
+              placeholder=""
+              value={data.sets}
+              onChange={handleChange}
+            />
+          </div>
 
-          <input
-            className="form-control"
-            type="text"
-            id="reps"
-            name="reps"
-            placeholder="Reps"
-            value={data.reps}
-            onChange={handleChange}
-            autoFocus
-          />
-        </div>
-        <div className="col d-flex align-items-end">
-          <button className="btn btn-primary">Save</button>
+          <div className="col">
+            <label htmlFor="reps" className="form-label">
+              Reps
+            </label>
+
+            <input
+              className="form-control"
+              type="text"
+              id="reps"
+              name="reps"
+              placeholder=""
+              value={data.reps}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col d-flex align-items-end">
+            <button className="btn btn-primary">Save</button>
+            <button
+              className="btn btn-secondary ms-2"
+              onClick={() => setAddingSet(false)}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
-      {/* </div> */}
     </form>
   )
 

@@ -5,7 +5,7 @@ import React from "react"
 import { useState } from "react"
 import ClearSets from "./ClearSets"
 import DeleteWorkoutExercise from "./DeleteWorkoutExercise"
-import CreateWorkoutSet from "./CreateWorkoutSet2"
+import CreateWorkoutSet from "./CreateWorkoutSet"
 
 type Props = {
   we: WorkoutExercise | any

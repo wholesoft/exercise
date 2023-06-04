@@ -1,7 +1,7 @@
 import React from "react"
 import AddWorkoutExercise from "./AddWorkoutExercise"
 import ExerciseMenu from "./ExerciseMenu"
-import ListSets from "./ListSets2"
+import ListSets from "./ListSets"
 import EditWorkoutHeader from "./EditWorkoutHeader"
 
 type Props = {
