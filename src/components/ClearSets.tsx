@@ -5,6 +5,8 @@ type Props = {
   weId: number
 }
 
+const atoken = "x"
+
 export default function ClearSets({ weId }: Props) {
   const router = useRouter()
 

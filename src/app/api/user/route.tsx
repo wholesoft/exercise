@@ -26,7 +26,7 @@ export async function POST(request: Request) {
   return NextResponse.json(newRecord)
 }
 
-export async function DELETE(request: Request) {
+/* export async function DELETE(request: Request) {
   const { id }: Partial<User> = await request.json()
 
   console.log(`DELETE USER ${id}`)
@@ -37,15 +37,14 @@ export async function DELETE(request: Request) {
   })
 
   return NextResponse.json({ message: `User ${id} deleted` })
-}
+} */
 
-export async function PUT(request: Request) {
+/* export async function PUT(request: Request) {
   const { id, email, role }: User = await request.json()
 
   console.log(request.json())
 
-  /*   if (!id || !email || !role)
-    return NextResponse.json({ message: "Missing required data." }) */
+
 
   const updatedUser = await prisma.user.update({
     data: {
@@ -58,4 +57,4 @@ export async function PUT(request: Request) {
   })
 
   return NextResponse.json(updatedUser)
-}
+} */

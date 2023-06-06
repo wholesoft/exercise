@@ -44,7 +44,7 @@ export default async function Exercises({}: Props) {
           return (
             <>
               {/* @ts-expect-error Server Component */}
-              <ShowExercise key={ex.id} exercise={ex} />
+              <ShowExercise key={ex.id} exercise={ex} session={session} />
             </>
           )
         })}

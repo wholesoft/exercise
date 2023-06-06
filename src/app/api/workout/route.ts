@@ -2,6 +2,9 @@ import { NextResponse, NextRequest } from "next/server"
 import { NextApiRequest, NextApiResponse } from "next"
 import { User, Workout } from "@prisma/client"
 import prisma from "@/lib/prisma"
+import { getUserId } from "@/lib/auth"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/next-authOptions"
 
 function getQueryStringParams(url: string) {
   let result: any = {}
@@ -16,7 +19,7 @@ function getQueryStringParams(url: string) {
   return result
 }
 
-export async function GET(request: NextRequest) {
+/* export async function GET(request: NextRequest) {
   let result: any = ""
   const { url } = request
   const params = getQueryStringParams(url)
@@ -37,13 +40,29 @@ export async function GET(request: NextRequest) {
   }
 
   return new NextResponse(JSON.stringify(result))
-}
+} */
 
 export async function POST(request: NextRequest) {
   const { user_id, timestamp, notes, scheduled }: Partial<Workout> =
     await request.json()
 
   console.log("Add Workout")
+
+  const session: any = await getServerSession(authOptions)
+  let atoken = ""
+  if (session != null) {
+    if (session.user != null) {
+      atoken = session.user.access_token
+    }
+  }
+  let jwtUserId = ""
+  if (atoken) {
+    jwtUserId = await getUserId(atoken)
+  }
+  if (jwtUserId === "Invalid JWT" || jwtUserId === "") {
+    return NextResponse.json({ message: "INVALID Credentials" }) // 401
+  }
+
   if (!user_id || !timestamp || scheduled === null)
     return NextResponse.json({ message: "Missing required data." })
   const data = { user_id, timestamp, notes, scheduled }
@@ -52,7 +71,7 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(newRecord)
 }
 
-export async function DELETE(request: NextRequest) {
+/* export async function DELETE(request: NextRequest) {
   const { id }: Partial<Workout> = await request.json()
 
   console.log(`DELETE WORKOUT ${id}`)
@@ -63,14 +82,27 @@ export async function DELETE(request: NextRequest) {
   })
 
   return NextResponse.json({ message: `User ${id} deleted` })
-}
+} */
 
 export async function PUT(request: NextRequest | any) {
   console.log("PUT: WORKOUT")
   const { id, timestamp, notes, scheduled }: Partial<Workout> | any =
     await request.json()
 
-  //console.log(request.json())
+  const session: any = await getServerSession(authOptions)
+  let atoken = ""
+  if (session != null) {
+    if (session.user != null) {
+      atoken = session.user.access_token
+    }
+  }
+  let jwtUserId = ""
+  if (atoken) {
+    jwtUserId = await getUserId(atoken)
+  }
+  if (jwtUserId === "Invalid JWT" || jwtUserId === "") {
+    return NextResponse.json({ message: "INVALID Credentials" }) // 401
+  }
 
   if (!id || !timestamp || !notes || scheduled === null)
     return NextResponse.json({ message: "Missing required data." })

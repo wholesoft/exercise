@@ -9,7 +9,7 @@ type Props = {
 
 const prisma = new PrismaClient()
 
-export async function GET(request: Request, { params: { id } }: Props) {
+/* export async function GET(request: Request, { params: { id } }: Props) {
   const parsedId = parseInt(id.toString())
   if (isNaN(parsedId)) return NextResponse.json({ message: "Invalid ID" })
 
@@ -21,3 +21,4 @@ export async function GET(request: Request, { params: { id } }: Props) {
     ? NextResponse.json(data)
     : NextResponse.json({ message: `No Workout Exercise with id ${id}` })
 }
+ */

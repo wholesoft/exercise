@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
+import { getUserId } from "@/lib/auth"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/next-authOptions"
 
 type Props = {
   params: {
@@ -7,7 +10,7 @@ type Props = {
   }
 }
 
-export async function GET(request: Request, { params: { id } }: Props) {
+/* export async function GET(request: Request, { params: { id } }: Props) {
   const parsedId = parseInt(id.toString())
   if (isNaN(parsedId)) return NextResponse.json({ message: "Invalid ID" })
 
@@ -16,11 +19,27 @@ export async function GET(request: Request, { params: { id } }: Props) {
   return data
     ? NextResponse.json(data)
     : NextResponse.json({ message: `No Workout with id ${id}` })
-}
+} */
 
 export async function PATCH(request: Request, { params: { id } }: Props) {
   const { scheduled, notes }: any = await request.json()
   const parsedId = parseInt(id.toString())
+
+  const session: any = await getServerSession(authOptions)
+  let atoken = ""
+  if (session != null) {
+    if (session.user != null) {
+      atoken = session.user.access_token
+    }
+  }
+  let jwtUserId = ""
+  if (atoken) {
+    jwtUserId = await getUserId(atoken)
+  }
+  if (jwtUserId === "Invalid JWT" || jwtUserId === "") {
+    return NextResponse.json({ message: "INVALID Credentials" }) // 401
+  }
+
   let success = false
   /* TODO: Validate fields and user_id */
 

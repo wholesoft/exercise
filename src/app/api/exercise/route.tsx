@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server"
 import { Exercise } from "@prisma/client"
 import prisma from "@/lib/prisma"
+import { getUserId } from "@/lib/auth"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/next-authOptions"
 
 //const prisma = new PrismaClient()
 
@@ -13,6 +16,22 @@ import prisma from "@/lib/prisma"
 
 export async function POST(request: Request) {
   console.log("POST: ADD EXERCISE")
+
+  const session: any = await getServerSession(authOptions)
+  let atoken = ""
+  if (session != null) {
+    if (session.user != null) {
+      atoken = session.user.access_token
+    }
+  }
+  let jwtUserId = ""
+  if (atoken) {
+    jwtUserId = await getUserId(atoken)
+  }
+  if (jwtUserId === "Invalid JWT" || jwtUserId === "") {
+    return NextResponse.json({ message: "INVALID Credentials" }) // 401
+  }
+
   const { user_id, name }: Partial<Exercise> = await request.json()
 
   if (!user_id || !name)
@@ -24,7 +43,7 @@ export async function POST(request: Request) {
   return NextResponse.json(newExercise)
 }
 
-export async function DELETE(request: Request) {
+/* export async function DELETE(request: Request) {
   const { id }: Partial<Exercise> = await request.json()
 
   console.log(`DELETE Exercise ${id}`)
@@ -35,24 +54,4 @@ export async function DELETE(request: Request) {
   })
 
   return NextResponse.json({ message: `Exercise ${id} deleted` })
-}
-
-export async function PUT(request: Request) {
-  const { id, name }: Exercise = await request.json()
-
-  console.log(request.json())
-
-  /*   if (!id || !email || !role)
-    return NextResponse.json({ message: "Missing required data." }) */
-
-  const updatedRecord = await prisma.exercise.update({
-    data: {
-      name: name,
-    },
-    where: {
-      id: id,
-    },
-  })
-
-  return NextResponse.json(updatedRecord)
-}
+} */
