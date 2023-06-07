@@ -11,24 +11,16 @@ export async function POST(request: Request) {
   const { we_id }: Partial<WorkoutSets> = await request.json()
 
   const session: any = await getServerSession(authOptions)
-
-  //console.log(session)
-
-  let user: any = null
   let atoken = ""
   if (session != null) {
     if (session.user != null) {
-      const authUserId = session.user.authUserId
       atoken = session.user.access_token
-      //user = await getUser(authUserId, atoken)
     }
   }
-
   let jwtUserId = ""
   if (atoken) {
     jwtUserId = await getUserId(atoken)
   }
-  //console.log(`GET USER: (${jwtUserId})`)
   if (jwtUserId === "Invalid JWT" || jwtUserId === "") {
     return NextResponse.json({ message: "INVALID Credentials" }) // 401
   }
