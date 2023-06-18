@@ -32,7 +32,7 @@ export default function ClearSets({ weId }: Props) {
     <div className="rounded-button-container">
       <span className="rounded-button" onClick={() => clearSets(weId)}>
         <i className="bi-dash bs-icon"></i>
-        <span className="bs-icon-label">Clear Sets</span>
+        <span className="bs-icon-label">Clear</span>
       </span>
     </div>
   )

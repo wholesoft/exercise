@@ -10,7 +10,7 @@ type Props = {}
 export default function Navbar({}: Props) {
   const [activeNav, setActiveNav] = useState(false)
   const handleToggleButtonClick = () => {
-    console.log(activeNav)
+    //console.log(activeNav)
     if (activeNav) {
       setActiveNav(false)
     } else {

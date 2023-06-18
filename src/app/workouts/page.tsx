@@ -4,7 +4,7 @@ import { authOptions } from "@/lib/next-authOptions"
 
 async function getUser(authUserId: string, atoken: string) {
   const url = `${process.env.APP_URL}/api/user/${authUserId}`
-  //console.log(url)
+  console.log(url)
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${atoken}` },
     cache: "no-store",
@@ -12,7 +12,7 @@ async function getUser(authUserId: string, atoken: string) {
 
   const data = await res.json()
   //console.log("fetch results")
-  //console.log(data)
+  console.log(data)
   return data
 }
 
@@ -30,7 +30,7 @@ export default async function Workout() {
     }
   }
   //console.log(session)
-  //console.log(user)
+  console.log(user)
 
   return user !== null ? (
     <div>

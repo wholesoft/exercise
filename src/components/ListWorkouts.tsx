@@ -57,42 +57,47 @@ export default function ListWorkouts({ user }: Props) {
   }
 
   const w = user.workouts
-  w.sort((a: any, b: any) => {
-    return new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf() // descending
-  })
+  let result = <CreateWorkout user={user} />
 
-  if (displayIndex === null && w.length > 0) {
-    setDisplayIndex(0)
-  }
+  if (w != undefined) {
+    w.sort((a: any, b: any) => {
+      return new Date(b.timestamp).valueOf() - new Date(a.timestamp).valueOf() // descending
+    })
 
-  let currentWorkout = w[displayIndex]
+    if (displayIndex === null && w.length > 0) {
+      setDisplayIndex(0)
+    }
 
-  let workoutDate = new Date(currentWorkout.timestamp)
-  var offset = workoutDate.getTimezoneOffset()
-  workoutDate.setTime(workoutDate.getTime() + offset * 60 * 1000)
+    let currentWorkout = w[displayIndex]
 
-  return (
-    <div>
-      <div className="fs-3" style={{ textAlign: "center" }}>
-        <i className="bi bi-caret-left" onClick={prevWorkout}></i>
-        <span className="fs-6">{workoutDate.toString().slice(0, 15)}</span>
+    let workoutDate = new Date(currentWorkout.timestamp)
+    var offset = workoutDate.getTimezoneOffset()
+    workoutDate.setTime(workoutDate.getTime() + offset * 60 * 1000)
 
-        <i className="bi bi-caret-right" onClick={nextWorkout}></i>
+    result = (
+      <div>
+        <div className="fs-3" style={{ textAlign: "center" }}>
+          <i className="bi bi-caret-left" onClick={prevWorkout}></i>
+          <span className="fs-6">{workoutDate.toString().slice(0, 15)}</span>
+
+          <i className="bi bi-caret-right" onClick={nextWorkout}></i>
+          <br />
+          {editMode ? (
+            <i className="bi bi-pencil-fill" onClick={toggleEditMode}></i>
+          ) : (
+            <i className="bi bi-pencil" onClick={toggleEditMode}></i>
+          )}
+
+          <i
+            className="bi bi-trash3 ms-3"
+            onClick={() => deleteWorkout(currentWorkout.id)}
+          ></i>
+        </div>
+        <CreateWorkout user={user} />
         <br />
-        {editMode ? (
-          <i className="bi bi-pencil-fill" onClick={toggleEditMode}></i>
-        ) : (
-          <i className="bi bi-pencil" onClick={toggleEditMode}></i>
-        )}
-
-        <i
-          className="bi bi-trash3 ms-3"
-          onClick={() => deleteWorkout(currentWorkout.id)}
-        ></i>
+        <DisplayWorkout w={currentWorkout} user={user} editMode={editMode} />
       </div>
-      <CreateWorkout user={user} />
-      <br />
-      <DisplayWorkout w={currentWorkout} user={user} editMode={editMode} />
-    </div>
-  )
+    )
+  }
+  return result
 }
