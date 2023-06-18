@@ -177,6 +177,7 @@
 
 .we-menu {
   display: flex;
+  align-items: flex-start;
 }
 
 .workout {

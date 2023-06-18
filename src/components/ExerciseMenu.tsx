@@ -18,7 +18,7 @@ export default function ExerciseMenu({ we, user, editMode }: Props) {
 
   return (
     <>
-      <div className="d-flex">
+      <div className="d-flex" style={{ alignItems: "flex-start" }}>
         <h4>
           {user.exercises.filter((e: any) => e.id == we.exercise_id)[0].name}
         </h4>
@@ -31,10 +31,11 @@ export default function ExerciseMenu({ we, user, editMode }: Props) {
               >
                 <span
                   className="rounded-button"
+                  style={{ width: "45px" }}
                   onClick={() => setAddingSet(true)}
                 >
                   <i className="bi-plus bs-icon"></i>
-                  <span className="bs-icon-label">Add Set</span>
+                  <span className="bs-icon-label">Add</span>
                 </span>
               </div>
             ) : null}
