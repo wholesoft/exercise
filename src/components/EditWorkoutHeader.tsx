@@ -95,7 +95,7 @@ export default function EditWorkoutHeader({ user, w, editMode }: Props) {
             id="scheduled"
             onChange={handleChange}
             value={data.scheduled?.toString()}
-            style={{ minWidth: "125px" }}
+            style={{ minWidth: "124px" }}
           >
             <option value="true">Scheduled</option>
             <option value="false">Completed</option>

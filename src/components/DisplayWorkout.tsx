@@ -14,12 +14,12 @@ export default function DisplayWorkout({ user, w, editMode }: Props) {
   //console.log(w)
 
   const result = w ? (
-    <div className="containerd">
+    <div className="container-fluid">
       <div className="workout row">
-        <div className="col">
+        <div className="col-7">
           <EditWorkoutHeader user={user} w={w} editMode={editMode} />
         </div>
-        <div className="col">
+        <div className="col-5">
           {editMode === true ? (
             <AddWorkoutExercise workoutId={w.id} user={user} />
           ) : null}
