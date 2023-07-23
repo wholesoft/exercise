@@ -26,8 +26,8 @@ export default async function Refresh({
       if (result.success === true) {
         console.log("Success!")
         console.log(result)
-        const { access_token, roles, email_confirmed, user_id, email } = result
-        localStorage.setItem("atoken", access_token)
+        const { accessToken, roles, email_confirmed, user_id, email } = result
+        localStorage.setItem("atoken", accessToken)
         setAuth({
           userId: user_id,
           email: email,

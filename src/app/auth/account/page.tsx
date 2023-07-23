@@ -10,18 +10,18 @@ type Props = {}
 export default function Account({}: Props) {
   const { data: session } = useSession()
 
-  /* const { email, roles, access_token, authUserId } = session?.user */
+  /* const { email, roles, accessToken, authUserId } = session?.user */
 
   return session?.user ? (
     <div>
       <h4>Account Page</h4>
-      <UpdatePassword accessToken={session.user.access_token} />
+      <UpdatePassword accessToken={session.user.accessToken} />
       <UpdateEmail user={session.user} />
 
       {/*       <p>{email}</p>
       <p>{authUserId}</p>
       <p>{roles}</p>
-      <p>{access_token}</p> */}
+      <p>{accessToken}</p> */}
     </div>
   ) : (
     <div>Loading...</div>

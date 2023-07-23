@@ -14,6 +14,7 @@ interface RequestBody {
 export async function POST(request: Request) {
   console.log("authLogin: POST")
   const body: RequestBody = await request.json()
+  console.log(body)
 
   const user = await prisma.user.findFirst({
     where: {

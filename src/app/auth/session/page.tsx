@@ -11,14 +11,14 @@ export default function Account({}: Props) {
   let result = <div>Loading...</div>
 
   if (session?.user != null) {
-    const { email, roles, access_token, authUserId } = session.user
+    const { email, roles, accessToken, authUserId } = session.user
     result = (
       <div>
         <p>Account Page</p>
         <p>{email}</p>
         <p>{authUserId}</p>
         <p>{roles}</p>
-        <p>{access_token}</p>
+        <p>{accessToken}</p>
       </div>
     )
   }

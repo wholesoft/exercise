@@ -37,7 +37,7 @@ export const authOptions: any = {
           body: JSON.stringify({
             email,
             password,
-            app: "strength.wholesoft.net",
+            app: "wholesoft.net",
           }),
         })
 
@@ -79,7 +79,7 @@ export const authOptions: any = {
       token: any
       user: any
     }) {
-      // Send properties to the client, like an access_token from a provider.
+      // Send properties to the client, like an accessToken from a provider.
       session.user = token as any
 
       return session

@@ -17,7 +17,7 @@ export const verifyAccessToken = async (token: string) => {
   try {
     const { payload, protectedHeader } = await jwtVerify(token, publicKey, {
       issuer: "wholesoft",
-      audience: "strength.wholesoft.net",
+      audience: "wholesoft.net",
     })
     //console.log(payload)
     //console.log(protectedHeader)
@@ -61,7 +61,7 @@ export const refreshToken = async () => {
   }
   /*   console.log(result)
   if (result.success == true) {
-    const { access_token, roles, email_confirmed, user_id, email } = result
+    const { accessToken, roles, email_confirmed, user_id, email } = result
     console.log(`${email} (${user_id})`)
   } else {
     console.log(result.message)
@@ -89,4 +89,3 @@ export const getUserId = async (jwta: string) => {
   //console.log(`Returning: ${result}`)
   return result
 }
-

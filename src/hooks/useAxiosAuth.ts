@@ -14,7 +14,7 @@ export const useAxiosAuth = () => {
         if (!config.headers["Authorization"]) {
           config.headers[
             "Authorization"
-          ] = `Bearer ${session?.user?.access_token}`
+          ] = `Bearer ${session?.user?.accessToken}`
         }
         return config
       },
@@ -30,7 +30,7 @@ export const useAxiosAuth = () => {
           await refreshToken()
           prevRequest.headers[
             "Authorization"
-          ] = `Bearer ${session?.user.access_token}`
+          ] = `Bearer ${session?.user.accessToken}`
           return axiosAuth(prevRequest)
         }
         return Promise.reject(error)

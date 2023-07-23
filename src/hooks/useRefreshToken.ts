@@ -16,11 +16,11 @@ const useRefreshToken = () => {
         ...prev,
         email: response.data.email,
         roles: response.data.roles,
-        access_token: response.data.access_token,
+        accessToken: response.data.accessToken,
         user_id: response.data.user_id,
       }
     }) */
-    return response.data.access_token
+    return response.data.accessToken
   }
   return refresh
 }

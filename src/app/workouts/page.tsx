@@ -25,7 +25,7 @@ export default async function Workout() {
   if (session != null) {
     if (session.user != null) {
       const authUserId = session.user.authUserId
-      const atoken = session.user.access_token
+      const atoken = session.user.accessToken
       user = await getUser(authUserId, atoken)
     }
   }

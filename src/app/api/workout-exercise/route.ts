@@ -48,7 +48,7 @@ export async function POST(request: Request) {
   let atoken = ""
   if (session != null) {
     if (session.user != null) {
-      atoken = session.user.access_token
+      atoken = session.user.accessToken
     }
   }
   let jwtUserId = ""

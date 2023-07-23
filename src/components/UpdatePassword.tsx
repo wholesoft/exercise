@@ -32,9 +32,9 @@ export default function UpdatePassword({ resetToken, accessToken }: any) {
             "Access-Control-Allow-Credentials": "true",
           },
           body: JSON.stringify({
-            password_reset_token: resetToken,
+            passwordResetToken: resetToken,
             password,
-            confirm_password: confirmPassword,
+            confirmPassword: confirmPassword,
           }),
         }
       )
@@ -55,7 +55,7 @@ export default function UpdatePassword({ resetToken, accessToken }: any) {
           },
           body: JSON.stringify({
             password,
-            confirm_password: confirmPassword,
+            confirmPassword: confirmPassword,
           }),
         }
       )

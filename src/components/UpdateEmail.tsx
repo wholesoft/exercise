@@ -28,7 +28,7 @@ export default function UpdateEmail({ user }: Props) {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": "true",
-          Authorization: `Bearer ${user.access_token}`,
+          Authorization: `Bearer ${user.accessToken}`,
         },
         body: JSON.stringify({
           email,
@@ -48,7 +48,7 @@ export default function UpdateEmail({ user }: Props) {
 
   return (
     <div>
-      {/*       <p>{user.access_token}</p> */}
+      {/*       <p>{user.accessToken}</p> */}
       <p>{response}</p>
       <h3>Update Email Address</h3>
 

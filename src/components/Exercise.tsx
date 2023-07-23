@@ -34,7 +34,7 @@ export default async function ShowExercise({ exercise, session }: Props) {
   let atoken = ""
   if (session != null) {
     if (session.user != null) {
-      atoken = session.user.access_token
+      atoken = session.user.accessToken
     }
   }
 

@@ -29,7 +29,7 @@ export default async function Exercises({}: Props) {
   if (session != null) {
     if (session.user != null) {
       const authUserId = session.user.authUserId
-      const atoken = session.user.access_token
+      const atoken = session.user.accessToken
       user = await getUser(authUserId, atoken)
     }
   }
@@ -39,7 +39,7 @@ export default async function Exercises({}: Props) {
   return user !== null ? (
     <div>
       {user.exercises
-        .filter((ex2: any) => ex2.inactive == false)
+        ?.filter((ex2: any) => ex2.inactive == false)
         .map((ex: any) => {
           return (
             <>

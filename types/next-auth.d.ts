@@ -3,9 +3,9 @@ import NextAuth from "next-auth"
 declare module "next-auth" {
   interface Session {
     user: {
-      access_token: string
+      accessToken: string
       email: string
-      email_confirmed: boolean
+      emailConfirmed: boolean
       exp: number
       iat: number
       jti: string
