@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { refreshToken } from "../../../lib/auth"
 type Props = {}
 
-export default async function Refresh({
+export default function Refresh({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
